@@ -83,7 +83,7 @@ public class agregarUsuario extends HttpServlet {
         
         User u = (User)s.getAttribute("user");
         if(u==null)
-            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/usuario/agregarUsuario.jsp").forward(request, response);
         else{
             String nombre = request.getParameter("nombre");
             String tipo = request.getParameter("tipo");

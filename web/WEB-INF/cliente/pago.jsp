@@ -1,19 +1,17 @@
 <%-- 
-    Document   : formulario
-    Created on : 03-04-2021, 19:04:15
+    Document   : pago
+    Created on : 08-05-2021, 19:20:50
     Author     : norar
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
     <style>
         body{
                 background-color: #EBFBE8;
             }
-        input[type=text],input[type=password],input[type=number],input[type=email], select {
+         input[type=text],input[type=password],input[type=number],input[type=email], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -72,42 +70,32 @@
     </style>
     <body>
         <ul>
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional" class="active">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
+            <li><a href="crearAccidente">Accidentes</a></li>
+            <li><a href="asesoriaEspecial" >Asesorias</a></li>
+            <li><a href="pago"class="active">Pagos</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Agregar Profesional</h3>
-
+        <h3>Generar Pago</h3>
         <div>
-            <form action="agregar" method="POST">
-                <label>Nombre</label>
-                <input type="text" name="nombre" placeholder="Nombre de profesional" required>
-                
-                <label>Apellido Paterno</label>
-                <input type="text" name="aPaterno" required>
-                
-                <label>Apellido Materno</label>
-                <input type="text" name="aMaterno" required>
-                
-                <label>Cargo</label>
-                <input type="text" name="cargo" required>
-                
-                <label >Usuario</label>
-                <select name="idUsuario">
-                    <option value="1">Sin Asignar</option>
+            <form action="pago" method="POST">
+                <label>Tipo de Pago</label>
+                <select name="tipoPago">
+                    <option value="sinAsignar">Sin Asignar</option>
+                    <option value="debito">Debito</option>
+                    <option value="debito">Crebito</option>
                 </select>
+                
+                <label>Monto</label>
+                <input type="text" name="monto" required>
+                <br><br>   
 
-                <input type="submit" value="Crear Profesional">
+                <input type="submit" value="Generar Pago">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
             </c:forEach>
         </div>
-
     </body>
 </html>

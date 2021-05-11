@@ -81,7 +81,7 @@ public class agregarCliente extends HttpServlet {
         
         Cli c = (Cli)s.getAttribute("cli");
         if(c==null)
-            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/cliente/agregarCliente.jsp").forward(request, response);
         else{
             String nombre = request.getParameter("nombre");
             String rubro = request.getParameter("rubro");

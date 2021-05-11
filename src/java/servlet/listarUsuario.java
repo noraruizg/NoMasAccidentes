@@ -67,9 +67,12 @@ public class listarUsuario extends HttpServlet {
         HttpSession s = request.getSession(); 
         User u= (User)s.getAttribute("user");
         if(u==null)
-            u = new User();
-        request.setAttribute("usrs", u.getAll());
-        request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
+           request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
+        else{
+            ArrayList<Usuario> usuarios = u.getAll();
+            request.setAttribute("usuarios", usuarios);
+            request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -85,8 +88,8 @@ public class listarUsuario extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-            //HttpSession s = request.getSession();
-            //request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
+            HttpSession s = request.getSession();
+            request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
     }
 
     /**

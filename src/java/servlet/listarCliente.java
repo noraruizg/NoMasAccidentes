@@ -90,7 +90,7 @@ public class listarCliente extends HttpServlet {
        HttpSession s = request.getSession();
         
         
-            request.getRequestDispatcher("WEB-INF/contrato/listarCliente.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/cliente/listarCliente.jsp").forward(request, response);
     }
 
     /**

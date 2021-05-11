@@ -90,8 +90,12 @@
                 <label>Fecha de Vencimiento</label>
                 <input type="date" name="fVencimiento" required>
                 <br><br>
-                <label>Cliente</label>
-                <select name="idCliente">
+                <label>Profesional</label>
+                <select name="id_Profesional">
+                    <option value="sinAsignar">Sin Asignar</option>
+                </select>
+                <label>Plan de Servicio</label>
+                <select name="id_PlanServicio">
                     <option value="sinAsignar">Sin Asignar</option>
                 </select>
 

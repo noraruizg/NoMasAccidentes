@@ -1,19 +1,17 @@
 <%-- 
-    Document   : formulario
-    Created on : 03-04-2021, 19:04:15
+    Document   : agregarCapacitacion
+    Created on : 08-05-2021, 19:28:15
     Author     : norar
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
     <style>
         body{
                 background-color: #EBFBE8;
             }
-        input[type=text],input[type=password],input[type=number],input[type=email], select {
+         input[type=text],input[type=password],input[type=number],input[type=email], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -73,41 +71,39 @@
     <body>
         <ul>
             <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional" class="active">Profesional</a></li>
+            <li><a href="listarProfesional">Profesional</a></li>
             <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
+            <li><a href="listarContrato" class="active">Contratos</a></li>
             <li><a href="listarReportes">Reportes</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Agregar Profesional</h3>
+        <h3>Planificar Capacitación</h3>
 
         <div>
-            <form action="agregar" method="POST">
-                <label>Nombre</label>
-                <input type="text" name="nombre" placeholder="Nombre de profesional" required>
+            <form action="agregarCapacitacion" method="POST">
+                <label>Fecha de Capacitacion</label>
+                <input type="date" name="fCapacitacion" required>
                 
-                <label>Apellido Paterno</label>
-                <input type="text" name="aPaterno" required>
-                
-                <label>Apellido Materno</label>
-                <input type="text" name="aMaterno" required>
-                
-                <label>Cargo</label>
-                <input type="text" name="cargo" required>
-                
-                <label >Usuario</label>
-                <select name="idUsuario">
-                    <option value="1">Sin Asignar</option>
+                <label>Fecha de Vencimiento</label>
+                <input type="date" name="fVencimiento" required>
+                <br><br>
+                <label>Descripcion Capacitacion</label>
+                <input type="text" name="descripcion" required>
+                <label>Cantidad Asistentes</label>
+                <input type="number" name="cantAsistentes" required>
+                <label>Material</label>
+                <select name="idMaterial">
+                    <option value="0">Sin Asignar</option>
                 </select>
-
-                <input type="submit" value="Crear Profesional">
+                <br><br>
+                
+                <input type="submit" value="Agregar Capacitacion">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
             </c:forEach>
         </div>
-
     </body>
 </html>
