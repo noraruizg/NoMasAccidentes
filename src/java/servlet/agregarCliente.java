@@ -86,9 +86,12 @@ public class agregarCliente extends HttpServlet {
             String nombre = request.getParameter("nombre");
             String rubro = request.getParameter("rubro");
             
+            String idUsuario = request.getParameter("idUsuario");
+            
             Cliente cl = new Cliente(
                     nombre,
-                    rubro
+                    Integer.parseInt(rubro),
+                    Integer.parseInt(idUsuario)
             );
             c.agregarCliente(cl);
             request.setAttribute("mensaje","Cliente Agregado Exitosamente");

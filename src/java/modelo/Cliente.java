@@ -6,18 +6,17 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,16 +32,20 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")
-    , @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.clientePK.idCliente = :idCliente")
+    , @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCliente")
     , @NamedQuery(name = "Cliente.findByNombre", query = "SELECT c FROM Cliente c WHERE c.nombre = :nombre")
     , @NamedQuery(name = "Cliente.findByRubro", query = "SELECT c FROM Cliente c WHERE c.rubro = :rubro")
-    , @NamedQuery(name = "Cliente.findByUsuarioIdUsuario", query = "SELECT c FROM Cliente c WHERE c.clientePK.usuarioIdUsuario = :usuarioIdUsuario")
-    , @NamedQuery(name = "Cliente.findByDescripcion", query = "SELECT c FROM Cliente c WHERE c.descripcion = :descripcion")})
+    , @NamedQuery(name = "Cliente.findByDescripcioncliente", query = "SELECT c FROM Cliente c WHERE c.descripcioncliente = :descripcioncliente")
+    , @NamedQuery(name = "Cliente.findByUsuarioIdUsuario", query = "SELECT c FROM Cliente c WHERE c.usuarioIdUsuario = :usuarioIdUsuario")})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected ClientePK clientePK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_CLIENTE")
+    private int idCliente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -50,42 +53,35 @@ public class Cliente implements Serializable {
     private String nombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "RUBRO")
-    private String rubro;
+    private int rubro;
     @Size(max = 200)
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
+    @Column(name = "DESCRIPCIONCLIENTE")
+    private String descripcioncliente;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "USUARIO_ID_USUARIO")
+    private int usuarioIdUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private Collection<Contrato> contratoCollection;
-    @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private Usuario usuario;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteIdCliente")
+    private Collection<Accidente> accidenteCollection;
 
     public Cliente() {
     }
 
-    public Cliente(ClientePK clientePK) {
-        this.clientePK = clientePK;
+    public Cliente(int idCliente) {
+        this.idCliente = idCliente;
     }
 
-    public Cliente(String nombre, String rubro) {
-        
+    public Cliente( String nombre, int rubro, int usuarioIdUsuario) {
+       
         this.nombre = nombre;
         this.rubro = rubro;
+        this.usuarioIdUsuario = usuarioIdUsuario;
     }
 
-    public Cliente(BigInteger idCliente, BigInteger usuarioIdUsuario) {
-        this.clientePK = new ClientePK(idCliente, usuarioIdUsuario);
-    }
-
-    public ClientePK getClientePK() {
-        return clientePK;
-    }
-
-    public void setClientePK(ClientePK clientePK) {
-        this.clientePK = clientePK;
-    }
+    
 
     public String getNombre() {
         return nombre;
@@ -95,20 +91,28 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getRubro() {
+    public int getRubro() {
         return rubro;
     }
 
-    public void setRubro(String rubro) {
+    public void setRubro(int rubro) {
         this.rubro = rubro;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDescripcioncliente() {
+        return descripcioncliente;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDescripcioncliente(String descripcioncliente) {
+        this.descripcioncliente = descripcioncliente;
+    }
+
+    public int getUsuarioIdUsuario() {
+        return usuarioIdUsuario;
+    }
+
+    public void setUsuarioIdUsuario(int usuarioIdUsuario) {
+        this.usuarioIdUsuario = usuarioIdUsuario;
     }
 
     @XmlTransient
@@ -120,37 +124,20 @@ public class Cliente implements Serializable {
         this.contratoCollection = contratoCollection;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    @XmlTransient
+    public Collection<Accidente> getAccidenteCollection() {
+        return accidenteCollection;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setAccidenteCollection(Collection<Accidente> accidenteCollection) {
+        this.accidenteCollection = accidenteCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (clientePK != null ? clientePK.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
-            return false;
-        }
-        Cliente other = (Cliente) object;
-        if ((this.clientePK == null && other.clientePK != null) || (this.clientePK != null && !this.clientePK.equals(other.clientePK))) {
-            return false;
-        }
-        return true;
-    }
+       
 
     @Override
     public String toString() {
-        return "modelo.Cliente[ clientePK=" + clientePK + " ]";
+        return "modelo.Cliente[ idCliente=" + idCliente + " ]";
     }
     
 }

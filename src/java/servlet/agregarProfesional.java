@@ -86,14 +86,16 @@ public class agregarProfesional extends HttpServlet {
             String nombre = request.getParameter("nombre");
             String aPaterno = request.getParameter("aPaterno");
             String aMaterno = request.getParameter("aMaterno");
-            String cargo = request.getParameter("cargo");
+            String idUsuario = request.getParameter("Usuario_id_usuario");
+            
             
             
             Profesional pr = new Profesional(
                     nombre,
                     aPaterno,
                     aMaterno,
-                    cargo
+                    Integer.parseInt(idUsuario)
+                    
                     
             );
             p.agregarProfesional(pr);

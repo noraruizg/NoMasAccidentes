@@ -105,7 +105,6 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Nombre</th>
                 <th>Email</th>
                 <th>Tipo</th>
                 <th>Opciones</th>
@@ -117,7 +116,6 @@
             <c:forEach items="${usrs}" var="usuario">
                 <tr>
                     <td></td>
-                    <td>${usuario.nombre}</td>
                     <td>${usuario.tipo}</td>
                     <td>${usuario.email}</td>
                     <td></td>

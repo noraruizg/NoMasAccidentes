@@ -6,17 +6,17 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -33,10 +33,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Profesional.findAll", query = "SELECT p FROM Profesional p")
     , @NamedQuery(name = "Profesional.findByIdProfesional", query = "SELECT p FROM Profesional p WHERE p.idProfesional = :idProfesional")
-    , @NamedQuery(name = "Profesional.findByNombre", query = "SELECT p FROM Profesional p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Profesional.findByCargo", query = "SELECT p FROM Profesional p WHERE p.cargo = :cargo")
+    , @NamedQuery(name = "Profesional.findByNombreprofesional", query = "SELECT p FROM Profesional p WHERE p.nombreprofesional = :nombreprofesional")
     , @NamedQuery(name = "Profesional.findByApaterno", query = "SELECT p FROM Profesional p WHERE p.apaterno = :apaterno")
-    , @NamedQuery(name = "Profesional.findByAmaterno", query = "SELECT p FROM Profesional p WHERE p.amaterno = :amaterno")})
+    , @NamedQuery(name = "Profesional.findByAmaterno", query = "SELECT p FROM Profesional p WHERE p.amaterno = :amaterno")
+    , @NamedQuery(name = "Profesional.findByUsuarioIdUsuario", query = "SELECT p FROM Profesional p WHERE p.usuarioIdUsuario = :usuarioIdUsuario")})
 public class Profesional implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,38 +45,36 @@ public class Profesional implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROFESIONAL")
-    private Integer idProfesional;
+    private int idProfesional;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "NOMBRE")
-    private String nombre;
+    @Size(min = 1, max = 100)
+    @Column(name = "NOMBREPROFESIONAL")
+    private String nombreprofesional;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "CARGO")
-    private String cargo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "APATERNO")
     private String apaterno;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "AMATERNO")
     private String amaterno;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private Collection<Relation13> relation13Collection;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "USUARIO_ID_USUARIO")
+    private int usuarioIdUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
-    private Collection<Checklist> checklistCollection;
-    @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
-    @OneToOne(optional = false)
-    private Usuario usuarioIdUsuario;
+    private Collection<Capacitacion> capacitacionCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
+    private Collection<Contrato> contratoCollection;
+    @OneToMany(mappedBy = "profesionalIdProfesional")
+    private Collection<Llamada> llamadaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
     private Collection<Visita> visitaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
-    private Collection<Historial> historialCollection;
+    private Collection<Asesoria> asesoriaCollection;
 
     public Profesional() {
     }
@@ -85,29 +83,28 @@ public class Profesional implements Serializable {
         this.idProfesional = idProfesional;
     }
 
-    public Profesional(String nombre, String cargo, String apaterno, String amaterno) {
+    public Profesional(String nombreprofesional, String apaterno, String amaterno, int usuarioIdUsuario) {
         
-        this.nombre = nombre;
-        this.cargo = cargo;
+        this.nombreprofesional = nombreprofesional;
         this.apaterno = apaterno;
         this.amaterno = amaterno;
+        this.usuarioIdUsuario = usuarioIdUsuario;
     }
 
-
-    public String getNombre() {
-        return nombre;
+    public int getIdProfesional() {
+        return idProfesional;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdProfesional(int idProfesional) {
+        this.idProfesional = idProfesional;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getNombreprofesional() {
+        return nombreprofesional;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setNombreprofesional(String nombreprofesional) {
+        this.nombreprofesional = nombreprofesional;
     }
 
     public String getApaterno() {
@@ -126,30 +123,39 @@ public class Profesional implements Serializable {
         this.amaterno = amaterno;
     }
 
-    @XmlTransient
-    public Collection<Relation13> getRelation13Collection() {
-        return relation13Collection;
-    }
-
-    public void setRelation13Collection(Collection<Relation13> relation13Collection) {
-        this.relation13Collection = relation13Collection;
-    }
-
-    @XmlTransient
-    public Collection<Checklist> getChecklistCollection() {
-        return checklistCollection;
-    }
-
-    public void setChecklistCollection(Collection<Checklist> checklistCollection) {
-        this.checklistCollection = checklistCollection;
-    }
-
-    public Usuario getUsuarioIdUsuario() {
+    public int getUsuarioIdUsuario() {
         return usuarioIdUsuario;
     }
 
-    public void setUsuarioIdUsuario(Usuario usuarioIdUsuario) {
+    public void setUsuarioIdUsuario(int usuarioIdUsuario) {
         this.usuarioIdUsuario = usuarioIdUsuario;
+    }
+
+    @XmlTransient
+    public Collection<Capacitacion> getCapacitacionCollection() {
+        return capacitacionCollection;
+    }
+
+    public void setCapacitacionCollection(Collection<Capacitacion> capacitacionCollection) {
+        this.capacitacionCollection = capacitacionCollection;
+    }
+
+    @XmlTransient
+    public Collection<Contrato> getContratoCollection() {
+        return contratoCollection;
+    }
+
+    public void setContratoCollection(Collection<Contrato> contratoCollection) {
+        this.contratoCollection = contratoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Llamada> getLlamadaCollection() {
+        return llamadaCollection;
+    }
+
+    public void setLlamadaCollection(Collection<Llamada> llamadaCollection) {
+        this.llamadaCollection = llamadaCollection;
     }
 
     @XmlTransient
@@ -162,33 +168,15 @@ public class Profesional implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Historial> getHistorialCollection() {
-        return historialCollection;
+    public Collection<Asesoria> getAsesoriaCollection() {
+        return asesoriaCollection;
     }
 
-    public void setHistorialCollection(Collection<Historial> historialCollection) {
-        this.historialCollection = historialCollection;
+    public void setAsesoriaCollection(Collection<Asesoria> asesoriaCollection) {
+        this.asesoriaCollection = asesoriaCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idProfesional != null ? idProfesional.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Profesional)) {
-            return false;
-        }
-        Profesional other = (Profesional) object;
-        if ((this.idProfesional == null && other.idProfesional != null) || (this.idProfesional != null && !this.idProfesional.equals(other.idProfesional))) {
-            return false;
-        }
-        return true;
-    }
+    
 
     @Override
     public String toString() {

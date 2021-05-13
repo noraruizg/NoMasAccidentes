@@ -10,14 +10,10 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -39,11 +35,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Contrato.findAll", query = "SELECT c FROM Contrato c")
     , @NamedQuery(name = "Contrato.findByIdContrato", query = "SELECT c FROM Contrato c WHERE c.contratoPK.idContrato = :idContrato")
-    , @NamedQuery(name = "Contrato.findByFinicio", query = "SELECT c FROM Contrato c WHERE c.finicio = :finicio")
-    , @NamedQuery(name = "Contrato.findByFvencimiento", query = "SELECT c FROM Contrato c WHERE c.fvencimiento = :fvencimiento")
-    , @NamedQuery(name = "Contrato.findByClienteIdCliente", query = "SELECT c FROM Contrato c WHERE c.contratoPK.clienteIdCliente = :clienteIdCliente")
-    , @NamedQuery(name = "Contrato.findByClienteUsuarioIdUsuario", query = "SELECT c FROM Contrato c WHERE c.contratoPK.clienteUsuarioIdUsuario = :clienteUsuarioIdUsuario")
-    , @NamedQuery(name = "Contrato.findByIdCliente", query = "SELECT c FROM Contrato c WHERE c.idCliente = :idCliente")})
+    , @NamedQuery(name = "Contrato.findByFechainicio", query = "SELECT c FROM Contrato c WHERE c.fechainicio = :fechainicio")
+    , @NamedQuery(name = "Contrato.findByFechatermino", query = "SELECT c FROM Contrato c WHERE c.fechatermino = :fechatermino")
+    , @NamedQuery(name = "Contrato.findByClienteIdCliente", query = "SELECT c FROM Contrato c WHERE c.contratoPK.clienteIdCliente = :clienteIdCliente")})
 public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,32 +45,27 @@ public class Contrato implements Serializable {
     protected ContratoPK contratoPK;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FINICIO")
+    @Column(name = "FECHAINICIO")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date finicio;
+    private Date fechainicio;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "FVENCIMIENTO")
+    @Column(name = "FECHATERMINO")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fvencimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_CLIENTE")
-    private BigInteger idCliente;
-    @JoinTable(name = "RELATION_15", joinColumns = {
-        @JoinColumn(name = "CONTRATO_ID_CONTRATO", referencedColumnName = "ID_CONTRATO")
-        , @JoinColumn(name = "CONTRATO_CLIENTE_ID_CLIENTE", referencedColumnName = "CLIENTE_ID_CLIENTE")
-        , @JoinColumn(name = "CONT_CLI_USUARIO_ID_USUARIO", referencedColumnName = "CLIENTE_USUARIO_ID_USUARIO")}, inverseJoinColumns = {
-        @JoinColumn(name = "SERVICIO_ID_SERVICIO", referencedColumnName = "ID_SERVICIO")})
-    @ManyToMany
-    private Collection<Servicio> servicioCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contrato")
-    private Collection<Extra> extraCollection;
-    @JoinColumns({
-        @JoinColumn(name = "CLIENTE_ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
-        , @JoinColumn(name = "CLIENTE_USUARIO_ID_USUARIO", referencedColumnName = "USUARIO_ID_USUARIO", insertable = false, updatable = false)})
+    private Date fechatermino;
+    @JoinColumn(name = "CLIENTE_ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cliente cliente;
+    @JoinColumn(name = "PLAN_SERVICIO_ID_PLAN_SERVICIO", referencedColumnName = "ID_PLAN_SERVICIO")
+    @ManyToOne(optional = false)
+    private PlanServicio planServicioIdPlanServicio;
+    @JoinColumn(name = "PROFESIONAL_ID_PROFESIONAL", referencedColumnName = "ID_PROFESIONAL")
+    @ManyToOne(optional = false)
+    private Profesional profesionalIdProfesional;
+    @OneToMany(mappedBy = "contrato")
+    private Collection<Pago> pagoCollection;
+    @OneToMany(mappedBy = "contrato")
+    private Collection<Servicioextra> servicioextraCollection;
 
     public Contrato() {
     }
@@ -85,15 +74,14 @@ public class Contrato implements Serializable {
         this.contratoPK = contratoPK;
     }
 
-    public Contrato(ContratoPK contratoPK, Date finicio, Date fvencimiento, BigInteger idCliente) {
+    public Contrato(ContratoPK contratoPK, Date fechainicio, Date fechatermino) {
         this.contratoPK = contratoPK;
-        this.finicio = finicio;
-        this.fvencimiento = fvencimiento;
-        this.idCliente = idCliente;
+        this.fechainicio = fechainicio;
+        this.fechatermino = fechatermino;
     }
 
-    public Contrato(BigInteger idContrato, BigInteger clienteIdCliente, BigInteger clienteUsuarioIdUsuario) {
-        this.contratoPK = new ContratoPK(idContrato, clienteIdCliente, clienteUsuarioIdUsuario);
+    public Contrato(BigInteger idContrato, BigInteger clienteIdCliente) {
+        this.contratoPK = new ContratoPK(idContrato, clienteIdCliente);
     }
 
     public ContratoPK getContratoPK() {
@@ -104,46 +92,20 @@ public class Contrato implements Serializable {
         this.contratoPK = contratoPK;
     }
 
-    public Date getFinicio() {
-        return finicio;
+    public Date getFechainicio() {
+        return fechainicio;
     }
 
-    public void setFinicio(Date finicio) {
-        this.finicio = finicio;
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
     }
 
-    public Date getFvencimiento() {
-        return fvencimiento;
+    public Date getFechatermino() {
+        return fechatermino;
     }
 
-    public void setFvencimiento(Date fvencimiento) {
-        this.fvencimiento = fvencimiento;
-    }
-
-    public BigInteger getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(BigInteger idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    @XmlTransient
-    public Collection<Servicio> getServicioCollection() {
-        return servicioCollection;
-    }
-
-    public void setServicioCollection(Collection<Servicio> servicioCollection) {
-        this.servicioCollection = servicioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Extra> getExtraCollection() {
-        return extraCollection;
-    }
-
-    public void setExtraCollection(Collection<Extra> extraCollection) {
-        this.extraCollection = extraCollection;
+    public void setFechatermino(Date fechatermino) {
+        this.fechatermino = fechatermino;
     }
 
     public Cliente getCliente() {
@@ -152,6 +114,40 @@ public class Contrato implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public PlanServicio getPlanServicioIdPlanServicio() {
+        return planServicioIdPlanServicio;
+    }
+
+    public void setPlanServicioIdPlanServicio(PlanServicio planServicioIdPlanServicio) {
+        this.planServicioIdPlanServicio = planServicioIdPlanServicio;
+    }
+
+    public Profesional getProfesionalIdProfesional() {
+        return profesionalIdProfesional;
+    }
+
+    public void setProfesionalIdProfesional(Profesional profesionalIdProfesional) {
+        this.profesionalIdProfesional = profesionalIdProfesional;
+    }
+
+    @XmlTransient
+    public Collection<Pago> getPagoCollection() {
+        return pagoCollection;
+    }
+
+    public void setPagoCollection(Collection<Pago> pagoCollection) {
+        this.pagoCollection = pagoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Servicioextra> getServicioextraCollection() {
+        return servicioextraCollection;
+    }
+
+    public void setServicioextraCollection(Collection<Servicioextra> servicioextraCollection) {
+        this.servicioextraCollection = servicioextraCollection;
     }
 
     @Override

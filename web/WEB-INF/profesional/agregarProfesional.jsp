@@ -93,12 +93,13 @@
                 <label>Apellido Materno</label>
                 <input type="text" name="aMaterno" required>
                 
-                <label>Cargo</label>
-                <input type="text" name="cargo" required>
                 
                 <label >Usuario</label>
                 <select name="idUsuario">
                     <option value="1">Sin Asignar</option>
+                    <c:forEach items="${usuarios}" var="idUsuario">
+                <h3>${usuarios}</h3>
+            </c:forEach>
                 </select>
 
                 <input type="submit" value="Crear Profesional">
