@@ -70,9 +70,10 @@
     </style>
     <body>
         <ul>
+            <li><a href="generarPago">Pagos</a></li>
             <li><a href="crearAccidente"class="active">Accidentes</a></li>
-            <li><a href="asesoriaEspecial" >Asesorias</a></li>
-            <li><a href="pago">Pagos</a></li>
+            <li><a href="asesoriaExtra" >Asesorias</a></li>
+            
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
