@@ -65,8 +65,8 @@ public class login extends HttpServlet {
         if(u==null)
             request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         else{
-            String nombre = u.getActivo().getNombre();            
-            request.setAttribute("nombre", nombre);
+            //String nombre = u.getActivo().getNombre();            
+            //request.setAttribute("nombre", nombre);
             request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
         }
     }
@@ -91,8 +91,8 @@ public class login extends HttpServlet {
         
         if(u.login(email, password)){
             s.setAttribute("user", u);
-            String nombre = u.getActivo().getNombre();            
-            request.setAttribute("nombre", nombre);
+            //String nombre = u.getActivo().getNombre();            
+            //request.setAttribute("nombre", nombre);
             request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
         }else{
             request.setAttribute("mensaje", "Datos incorrectos");
