@@ -4,6 +4,8 @@
     Author     : norar
 --%>
 
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -92,7 +94,7 @@
         <h3>Agregar Contrato</h3>
 
         <div>
-            <form action="agregarContrato" method="POST">
+            <form action="">
                 <label>Fecha de Inicio</label>
                 <input type="date" name="fInicio" required>
                 
@@ -132,8 +134,26 @@
                     %>      
                 </select>
 
-                <input type="submit" value="Crear Contrato">
+                <input type="submit" value="Crear Contrato" btn="RegistrarContrato">
             </form>
+                
+            <%      
+                //Registrar Contrato
+                if(request.getParameter("RegistrarContrato")!= null)
+                {
+                    SimpleDateFormat formatfecha = new SimpleDateFormat("dd-mm-yyyy");
+                    Date fechaInParsed = formatfecha.parse(request.getParameter("fInicio"));
+                    Date fechaTeParsed = formatfecha.parse(request.getParameter("fVencimiento"));
+                    int PlanServ = Integer.parseInt(request.getParameter("id_PlanServicio"));                   
+                    try{
+                        st.executeUpdate("INSERT INTO CONTRATO VALUES ('"+fechaInParsed+"','"+fechaTeParsed+"','1','1',"+PlanServ+")");
+                        request.getRequestDispatcher("agregarCliente.jsp").forward(request, response);
+                    }catch(Exception e){
+                        out.print(e+"");
+                    }
+                }                
+            %>
+                
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
