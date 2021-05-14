@@ -102,6 +102,7 @@
                 <select name="id_PlanServicio">
                     <option value="sinAsignar">Sin Asignar</option>
                     <%    
+                      //Mostrar Planes en ComboBox  
                       String query = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO";
                       Class.forName("oracle.jdbc.OracleDriver").newInstance();
                       Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "sebafzen", "duoc");
