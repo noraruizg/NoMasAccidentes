@@ -4,6 +4,10 @@
     Author     : norar
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -76,7 +80,7 @@
             <li><a href="listarProfesional">Profesional</a></li>
             <li><a href="listarCliente">Clientes</a></li>
             <li><a href="listarContrato" class="active">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
+            <li><a href="">Reportes</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
@@ -97,6 +101,19 @@
                 <label>Plan de Servicio</label>
                 <select name="id_PlanServicio">
                     <option value="sinAsignar">Sin Asignar</option>
+                    <%    
+                      String query = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO";
+                      Class.forName("oracle.jdbc.OracleDriver").newInstance();
+                      Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "sebafzen", "duoc");
+                      Statement st = con.createStatement();
+                      ResultSet rs = st.executeQuery(query);
+                      
+                      while(rs.next()){
+                    %>
+                        <option value="<%=rs.getInt("ID_PLAN_SERVICIO")%>"><%=rs.getString("NOMBREPLAN")%></option>
+                    <%
+                      } 
+                    %>        
                 </select>
 
                 <input type="submit" value="Crear Contrato">
