@@ -14,6 +14,11 @@
 
 <html>
     <style>
+        <%
+            Class.forName("oracle.jdbc.OracleDriver").newInstance();
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "sebafzen", "duoc");
+            Statement st = con.createStatement();
+        %>
         body{
                 background-color: #EBFBE8;
             }
@@ -94,27 +99,37 @@
                 <label>Fecha de Vencimiento</label>
                 <input type="date" name="fVencimiento" required>
                 <br><br>
+                
                 <label>Profesional</label>
                 <select name="id_Profesional">
                     <option value="sinAsignar">Sin Asignar</option>
+                    <%    
+                      //Mostrar Profesionales en ComboBox  
+                      String queryProfesional = "SELECT ID_PROFESIONAL, NOMBREPROFESIONAL, APATERNO, AMATERNO FROM PROFESIONAL ORDER BY NOMBREPROFESIONAL";
+                      ResultSet rsProfesional = st.executeQuery(queryProfesional);
+                      
+                      while(rsProfesional.next()){
+                    %>
+                        <option value="<%=rsProfesional.getInt("ID_PROFESIONAL")%>"><%=rsProfesional.getString("NOMBREPROFESIONAL") + " " + rsProfesional.getString("APATERNO")%></option>
+                    <%
+                      } 
+                    %>  
                 </select>
+                
                 <label>Plan de Servicio</label>
                 <select name="id_PlanServicio">
                     <option value="sinAsignar">Sin Asignar</option>
                     <%    
-                      //Mostrar Planes en ComboBox  
-                      String query = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO";
-                      Class.forName("oracle.jdbc.OracleDriver").newInstance();
-                      Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "sebafzen", "duoc");
-                      Statement st = con.createStatement();
-                      ResultSet rs = st.executeQuery(query);
+                      //Mostrar Planes de Servicio en ComboBox  
+                      String queryServicio = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO ORDER BY NOMBREPLAN";
+                      ResultSet rsServicio = st.executeQuery(queryServicio);
                       
-                      while(rs.next()){
+                      while(rsServicio.next()){
                     %>
-                        <option value="<%=rs.getInt("ID_PLAN_SERVICIO")%>"><%=rs.getString("NOMBREPLAN")%></option>
+                        <option value="<%=rsServicio.getInt("ID_PLAN_SERVICIO")%>"><%=rsServicio.getString("NOMBREPLAN")%></option>
                     <%
                       } 
-                    %>        
+                    %>      
                 </select>
 
                 <input type="submit" value="Crear Contrato">
