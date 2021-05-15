@@ -134,24 +134,7 @@
                     %>      
                 </select>
 
-                <input type="submit" value="Crear Contrato" btn="RegistrarContrato">
-                <%      
-                //Registrar Contrato
-                //if(request.getParameter("RegistrarContrato")!= null)
-                //{
-                //    SimpleDateFormat formatfecha = new SimpleDateFormat("dd/mm/yyyy");
-                //    
-                //    java.util.Date fechaIn = formatfecha.parse(request.getParameter("fInicio"));
-                //    java.util.Date fechate = formatfecha.parse(request.getParameter("fVencimiento"));
-                //    int PlanServ = Integer.parseInt(request.getParameter("id_PlanServicio"));                   
-                //    try{
-                //        st.executeUpdate("INSERT INTO CONTRATO VALUES ('"+fechaIn+"','"+fechate+"','1','1',"+PlanServ+")");
-                //        request.getRequestDispatcher("agregarCliente.jsp").forward(request, response);
-                //    }catch(Exception e){
-                //        out.print(e+"");
-                //    }
-                //}                
-                %>               
+                <input type="submit" value="Crear Contrato" btn="RegistrarContrato">            
             </form>
                 
             
