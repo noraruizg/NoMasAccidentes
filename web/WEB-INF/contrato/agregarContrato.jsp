@@ -104,7 +104,7 @@
                 
                 <label>Profesional</label>
                 <select name="id_Profesional">
-                    <option value="sinAsignar">Sin Asignar</option>
+                    <option  value="" disabled selected hidden>Sin Asignar</option>
                     <%    
                       //Mostrar Profesionales en ComboBox  
                       String queryProfesional = "SELECT ID_PROFESIONAL, NOMBREPROFESIONAL, APATERNO, AMATERNO FROM PROFESIONAL ORDER BY NOMBREPROFESIONAL";
@@ -120,7 +120,7 @@
                 
                 <label>Plan de Servicio</label>
                 <select name="id_PlanServicio">
-                    <option value="sinAsignar">Sin Asignar</option>
+                    <option value="" disabled selected hidden>Sin Asignar</option>
                     <%    
                       //Mostrar Planes de Servicio en ComboBox  
                       String queryServicio = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO ORDER BY NOMBREPLAN";
@@ -135,24 +135,26 @@
                 </select>
 
                 <input type="submit" value="Crear Contrato" btn="RegistrarContrato">
+                <%      
+                //Registrar Contrato
+                //if(request.getParameter("RegistrarContrato")!= null)
+                //{
+                //    SimpleDateFormat formatfecha = new SimpleDateFormat("dd/mm/yyyy");
+                //    
+                //    java.util.Date fechaIn = formatfecha.parse(request.getParameter("fInicio"));
+                //    java.util.Date fechate = formatfecha.parse(request.getParameter("fVencimiento"));
+                //    int PlanServ = Integer.parseInt(request.getParameter("id_PlanServicio"));                   
+                //    try{
+                //        st.executeUpdate("INSERT INTO CONTRATO VALUES ('"+fechaIn+"','"+fechate+"','1','1',"+PlanServ+")");
+                //        request.getRequestDispatcher("agregarCliente.jsp").forward(request, response);
+                //    }catch(Exception e){
+                //        out.print(e+"");
+                //    }
+                //}                
+                %>               
             </form>
                 
-            <%      
-                //Registrar Contrato
-                if(request.getParameter("RegistrarContrato")!= null)
-                {
-                    SimpleDateFormat formatfecha = new SimpleDateFormat("dd-mm-yyyy");
-                    Date fechaInParsed = formatfecha.parse(request.getParameter("fInicio"));
-                    Date fechaTeParsed = formatfecha.parse(request.getParameter("fVencimiento"));
-                    int PlanServ = Integer.parseInt(request.getParameter("id_PlanServicio"));                   
-                    try{
-                        st.executeUpdate("INSERT INTO CONTRATO VALUES ('"+fechaInParsed+"','"+fechaTeParsed+"','1','1',"+PlanServ+")");
-                        request.getRequestDispatcher("agregarCliente.jsp").forward(request, response);
-                    }catch(Exception e){
-                        out.print(e+"");
-                    }
-                }                
-            %>
+            
                 
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
