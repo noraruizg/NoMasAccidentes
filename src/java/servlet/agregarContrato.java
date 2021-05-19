@@ -8,13 +8,10 @@ package servlet;
 import ConexionconBD.ConexionBD;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.CallableStatement;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -45,33 +42,6 @@ public class agregarContrato extends HttpServlet {
             throws ServletException, IOException {
         HttpSession s = request.getSession();
         
-        //Con este codigo es un ejemplo de como agregar un usuario
-        
-//        Usuario usuario = new Usuario();
-//        usuario.setTipousuario(2);
-//        usuario.setEmail("nicoruiz@gmail.com");
-//        usuario.setPassword("nicoruiz.12");
-//        
-//        ConexionBD conec = new ConexionBD();
-//        Connection conn = conec.conectar();
-//        PreparedStatement st;
-//        
-//        String sql = "INSERT INTO USUARIO(TIPOUSUARIO, EMAIL, PASSWORD) VALUES(?,?,?)";
-//        
-//        try{           
-//                
-//            st = conn.prepareStatement(sql);
-//            st.setInt(1, usuario.getTipousuario());
-//            st.setString(2, usuario.getEmail());
-//            st.setString(3, usuario.getPassword());     
-//            st.executeUpdate();
-//        }catch(SQLException ex){
-//            System.out.println("Error de SQL" + ex);
-//        }
-//        request.getRequestDispatcher("listarContrato").forward(request, response);
-
-
-        //Codigo para Agregar un contrato
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
         
         String fechaIn = request.getParameter("fInicio");
@@ -101,18 +71,15 @@ public class agregarContrato extends HttpServlet {
         
         ConexionBD conec = new ConexionBD();
         Connection conn = conec.conectar();
-        PreparedStatement st;
         
-        String sql = "INSERT INTO CONTRATO(FECHAINICIO, FECHATERMINO, CLIENTE_ID_CLIENTE, PROFESIONAL_ID_PROFESIONAL, PLAN_SERVICIO_ID_PLAN_SERVICIO) VALUES(?,?,?,?,?)";
-        
-        try{                
-            st = conn.prepareStatement(sql);
-            st.setDate(1, fechaInicio);
-            st.setDate(2, fechaTermino);
-            st.setInt(3, 2); 
-            st.setInt(4, idProfesional);
-            st.setInt(5, planServicio);
-            st.executeUpdate();
+        try{  
+            CallableStatement  cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?)}");
+            cst.setDate(1, fechaInicio);
+            cst.setDate(2, fechaTermino);
+            cst.setInt(3, 2); 
+            cst.setInt(4, idProfesional);
+            cst.setInt(5, planServicio);
+            cst.executeUpdate();
         }catch(SQLException ex){
             System.out.println("Error de SQL" + ex);
         }
