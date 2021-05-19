@@ -70,7 +70,7 @@ public class agregarContrato extends HttpServlet {
         int planServicio = Integer.parseInt(request.getParameter("id_PlanServicio"));
         
         ConexionBD conec = new ConexionBD();
-        Connection conn = conec.conectar();
+        Connection conn = conec.conectar(); 
         
         try{  
             CallableStatement  cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?)}");
