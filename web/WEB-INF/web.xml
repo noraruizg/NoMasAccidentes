@@ -5,36 +5,12 @@
         <servlet-class>servlet.login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>agregarUsuario</servlet-name>
-        <servlet-class>servlet.agregarUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>listarUsuario</servlet-name>
-        <servlet-class>servlet.listarUsuario</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>agregarProfesional</servlet-name>
-        <servlet-class>servlet.agregarProfesional</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>listarProfesional</servlet-name>
-        <servlet-class>servlet.listarProfesional</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>agregarContrato</servlet-name>
         <servlet-class>servlet.agregarContrato</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>listarContrato</servlet-name>
         <servlet-class>servlet.listarContrato</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>agregarCliente</servlet-name>
-        <servlet-class>servlet.agregarCliente</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>listarCliente</servlet-name>
-        <servlet-class>servlet.listarCliente</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>logout</servlet-name>
@@ -81,36 +57,12 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>agregarUsuario</servlet-name>
-        <url-pattern>/agregarUsuario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>listarUsuario</servlet-name>
-        <url-pattern>/listarUsuario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>agregarUsuario</servlet-name>
-        <url-pattern>/agregarUsuario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>listarProfesional</servlet-name>
-        <url-pattern>/listarProfesional</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>agregarContrato</servlet-name>
         <url-pattern>/agregarContrato</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>listarContrato</servlet-name>
         <url-pattern>/listarContrato</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>agregarCliente</servlet-name>
-        <url-pattern>/agregarCliente</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>listarCliente</servlet-name>
-        <url-pattern>/listarCliente</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>logout</servlet-name>
