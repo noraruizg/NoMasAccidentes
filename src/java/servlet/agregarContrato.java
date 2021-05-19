@@ -79,7 +79,7 @@ public class agregarContrato extends HttpServlet {
             cst.setInt(3, 2); 
             cst.setInt(4, idProfesional);
             cst.setInt(5, planServicio);
-            cst.executeUpdate();
+            cst.executeUpdate(); 
         }catch(SQLException ex){
             System.out.println("Error de SQL" + ex);
         }
