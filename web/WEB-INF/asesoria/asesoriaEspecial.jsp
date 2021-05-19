@@ -70,27 +70,23 @@
     </style>
     <body>
         <ul>
-            <li><a href="crearAccidente">Accidentes</a></li>
-            <li><a href="asesoriaEspecial"class="active" >Visitas</a></li>
-            <li><a href="pago">Pagos</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
+            <li><a href="listarAsesoria"class="active">Asesorias</a></li>
+            <li><a href="">Checklist</a></li>
 
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
-        <h3>Solicitar Asesoria Especial</h3>
+        <h3>Agregar Asesoria</h3>
         <div>
             <form action="asesoriaEspecial" method="POST">
-                <label>Tipo de Pago</label>
-                <select name="tipoPago">
-                    <option value="sinAsignar">Sin Asignar</option>
-                    <option value="debito">Debito</option>
-                    <option value="debito">Crebito</option>
-                </select>
-                
-                <label>Monto</label>
-                <input type="text" name="monto" required>
+                <label>Fecha Asesoria</label>
+                <input type="date" name="fechaAsesoria" required>
+                <br><br>
+                <label>Tipo de Asesoria</label>
+                <input type="text" name="tipoAsesoria" required>
                 <br><br>   
 
-                <input type="submit" value="Solicitar Asesoria Especial">
+                <input type="submit" value="Solicitar Asesoria Extra">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">

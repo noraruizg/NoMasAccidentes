@@ -17,6 +17,10 @@
         <servlet-class>servlet.logout</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>menu</servlet-name>
+        <servlet-class>servlet.menu</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>agregarCapacitacion</servlet-name>
         <servlet-class>servlet.agregarCapacitacion</servlet-class>
     </servlet>
@@ -39,6 +43,10 @@
     <servlet>
         <servlet-name>asesoriaEspecial</servlet-name>
         <servlet-class>servlet.asesoriaEspecial</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>listarAsesoria</servlet-name>
+        <servlet-class>servlet.listarAsesoria</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>generarPago</servlet-name>
@@ -69,6 +77,10 @@
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>menu</servlet-name>
+        <url-pattern>/menu</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>agregarCapacitacion</servlet-name>
         <url-pattern>/agregarCapacitacion</url-pattern>
     </servlet-mapping>
@@ -93,6 +105,10 @@
         <url-pattern>/asesoriaEspecial</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>listarAsesoria</servlet-name>
+        <url-pattern>/listarAsesoria</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>generarPago</servlet-name>
         <url-pattern>/generarPago</url-pattern>
     </servlet-mapping>
@@ -110,6 +126,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>listarUsuario</welcome-file>
+        <welcome-file>menu</welcome-file>
     </welcome-file-list>
 </web-app>

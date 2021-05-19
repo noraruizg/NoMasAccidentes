@@ -56,7 +56,8 @@ public class crearAccidente extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        request.getRequestDispatcher("WEB-INF/cliente/crearAccidente.jsp").forward(request, response);
     }
 
     /**

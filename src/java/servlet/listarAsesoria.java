@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author norar
  */
-public class generarPago extends HttpServlet {
+public class listarAsesoria extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class generarPago extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet generarPago</title>");            
+            out.println("<title>Servlet listarAsesoria</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet generarPago at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet listarAsesoria at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +57,7 @@ public class generarPago extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        request.getRequestDispatcher("WEB-INF/cliente/pago.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/asesoria/listarAsesorias.jsp").forward(request, response);
     }
 
     /**

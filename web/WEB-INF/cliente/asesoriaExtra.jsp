@@ -1,6 +1,6 @@
 <%-- 
-    Document   : asesoriaExtra
-    Created on : 08-05-2021, 20:44:47
+    Document   : asesoriaEspecial
+    Created on : 08-05-2021, 20:51:00
     Author     : norar
 --%>
 
@@ -70,25 +70,27 @@
     </style>
     <body>
         <ul>
+            <li><a href="generarPago">Pagos</a></li>
             <li><a href="crearAccidente">Accidentes</a></li>
-            <li><a href="asesoriaEspecial"class="active" >Asesorias</a></li>
-            <li><a href="pago">Pagos</a></li>
+            <li><a href="asesoriaExtra"class="active" >Asesorias</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         <h3>Solicitar Asesoria Extra</h3>
         <div>
-            <form action="asesoriaEspecial" method="POST">
-                <label>Tipo de Asesoria</label>
-                <select name="tipoAsesoria">
+            <form action="asesoriaExtra" method="POST">
+                <label>Tipo de Pago</label>
+                <select name="tipoPago">
                     <option value="sinAsignar">Sin Asignar</option>
+                    <option value="debito">Debito</option>
+                    <option value="debito">Crebito</option>
                 </select>
                 
-                <label>Fecha Asesoria</label>
-                <input type="text" name="fechaAsesoria" required>
+                <label>Monto</label>
+                <input type="text" name="monto" required>
                 <br><br>   
 
-                <input type="submit" value="Solicitar Asesoria">
+                <input type="submit" value="Solicitar Asesoria Especial">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
