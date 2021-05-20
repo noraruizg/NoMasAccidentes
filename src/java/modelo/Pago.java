@@ -6,26 +6,24 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,19 +34,19 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Pago.findAll", query = "SELECT p FROM Pago p")
-    , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.pagoPK.idPago = :idPago")
+    , @NamedQuery(name = "Pago.findByIdPago", query = "SELECT p FROM Pago p WHERE p.idPago = :idPago")
     , @NamedQuery(name = "Pago.findByFechapago", query = "SELECT p FROM Pago p WHERE p.fechapago = :fechapago")
-    , @NamedQuery(name = "Pago.findByMonto", query = "SELECT p FROM Pago p WHERE p.monto = :monto")
-    , @NamedQuery(name = "Pago.findByIdContrato", query = "SELECT p FROM Pago p WHERE p.pagoPK.idContrato = :idContrato")
-    , @NamedQuery(name = "Pago.findByIdCliente", query = "SELECT p FROM Pago p WHERE p.pagoPK.idCliente = :idCliente")
-    , @NamedQuery(name = "Pago.findByIdUsuario", query = "SELECT p FROM Pago p WHERE p.pagoPK.idUsuario = :idUsuario")
     , @NamedQuery(name = "Pago.findByTipopago", query = "SELECT p FROM Pago p WHERE p.tipopago = :tipopago")
-    , @NamedQuery(name = "Pago.findByIdCliente1", query = "SELECT p FROM Pago p WHERE p.idCliente1 = :idCliente1")})
+    , @NamedQuery(name = "Pago.findByMonto", query = "SELECT p FROM Pago p WHERE p.monto = :monto")})
 public class Pago implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PagoPK pagoPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_PAGO")
+    private BigDecimal idPago;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAPAGO")
@@ -56,48 +54,39 @@ public class Pago implements Serializable {
     private Date fechapago;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "MONTO")
-    private BigInteger monto;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "TIPOPAGO")
     private String tipopago;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "ID_CLIENTE1")
-    private BigInteger idCliente1;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pago")
-    private Collection<Documento> documentoCollection;
-    @JoinColumn(name = "SERVICIO_ID_SERVICIO", referencedColumnName = "ID_SERVICIO")
-    @ManyToOne(optional = false)
-    private Servicio servicioIdServicio;
+    @Column(name = "MONTO")
+    private BigInteger monto;
+    @JoinColumns({
+        @JoinColumn(name = "CONTRATO_ID_CONTRATO", referencedColumnName = "ID_CONTRATO")
+        , @JoinColumn(name = "CONTRATO_ID_CLIENTE", referencedColumnName = "CLIENTE_ID_CLIENTE")})
+    @ManyToOne
+    private Contrato contrato;
 
     public Pago() {
     }
 
-    public Pago(PagoPK pagoPK) {
-        this.pagoPK = pagoPK;
+    public Pago(BigDecimal idPago) {
+        this.idPago = idPago;
     }
 
-    public Pago(PagoPK pagoPK, Date fechapago, BigInteger monto, String tipopago, BigInteger idCliente1) {
-        this.pagoPK = pagoPK;
+    public Pago(BigDecimal idPago, Date fechapago, String tipopago, BigInteger monto) {
+        this.idPago = idPago;
         this.fechapago = fechapago;
-        this.monto = monto;
         this.tipopago = tipopago;
-        this.idCliente1 = idCliente1;
+        this.monto = monto;
     }
 
-    public Pago(BigInteger idPago, BigInteger idContrato, BigInteger idCliente, BigInteger idUsuario) {
-        this.pagoPK = new PagoPK(idPago, idContrato, idCliente, idUsuario);
+    public BigDecimal getIdPago() {
+        return idPago;
     }
 
-    public PagoPK getPagoPK() {
-        return pagoPK;
-    }
-
-    public void setPagoPK(PagoPK pagoPK) {
-        this.pagoPK = pagoPK;
+    public void setIdPago(BigDecimal idPago) {
+        this.idPago = idPago;
     }
 
     public Date getFechapago() {
@@ -108,14 +97,6 @@ public class Pago implements Serializable {
         this.fechapago = fechapago;
     }
 
-    public BigInteger getMonto() {
-        return monto;
-    }
-
-    public void setMonto(BigInteger monto) {
-        this.monto = monto;
-    }
-
     public String getTipopago() {
         return tipopago;
     }
@@ -124,35 +105,26 @@ public class Pago implements Serializable {
         this.tipopago = tipopago;
     }
 
-    public BigInteger getIdCliente1() {
-        return idCliente1;
+    public BigInteger getMonto() {
+        return monto;
     }
 
-    public void setIdCliente1(BigInteger idCliente1) {
-        this.idCliente1 = idCliente1;
+    public void setMonto(BigInteger monto) {
+        this.monto = monto;
     }
 
-    @XmlTransient
-    public Collection<Documento> getDocumentoCollection() {
-        return documentoCollection;
+    public Contrato getContrato() {
+        return contrato;
     }
 
-    public void setDocumentoCollection(Collection<Documento> documentoCollection) {
-        this.documentoCollection = documentoCollection;
-    }
-
-    public Servicio getServicioIdServicio() {
-        return servicioIdServicio;
-    }
-
-    public void setServicioIdServicio(Servicio servicioIdServicio) {
-        this.servicioIdServicio = servicioIdServicio;
+    public void setContrato(Contrato contrato) {
+        this.contrato = contrato;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (pagoPK != null ? pagoPK.hashCode() : 0);
+        hash += (idPago != null ? idPago.hashCode() : 0);
         return hash;
     }
 
@@ -163,7 +135,7 @@ public class Pago implements Serializable {
             return false;
         }
         Pago other = (Pago) object;
-        if ((this.pagoPK == null && other.pagoPK != null) || (this.pagoPK != null && !this.pagoPK.equals(other.pagoPK))) {
+        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
             return false;
         }
         return true;
@@ -171,7 +143,7 @@ public class Pago implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Pago[ pagoPK=" + pagoPK + " ]";
+        return "modelo.Pago[ idPago=" + idPago + " ]";
     }
     
 }

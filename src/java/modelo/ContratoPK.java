@@ -27,18 +27,13 @@ public class ContratoPK implements Serializable {
     @NotNull
     @Column(name = "CLIENTE_ID_CLIENTE")
     private BigInteger clienteIdCliente;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "CLIENTE_USUARIO_ID_USUARIO")
-    private BigInteger clienteUsuarioIdUsuario;
 
     public ContratoPK() {
     }
 
-    public ContratoPK(BigInteger idContrato, BigInteger clienteIdCliente, BigInteger clienteUsuarioIdUsuario) {
+    public ContratoPK(BigInteger idContrato, BigInteger clienteIdCliente) {
         this.idContrato = idContrato;
         this.clienteIdCliente = clienteIdCliente;
-        this.clienteUsuarioIdUsuario = clienteUsuarioIdUsuario;
     }
 
     public BigInteger getIdContrato() {
@@ -57,20 +52,11 @@ public class ContratoPK implements Serializable {
         this.clienteIdCliente = clienteIdCliente;
     }
 
-    public BigInteger getClienteUsuarioIdUsuario() {
-        return clienteUsuarioIdUsuario;
-    }
-
-    public void setClienteUsuarioIdUsuario(BigInteger clienteUsuarioIdUsuario) {
-        this.clienteUsuarioIdUsuario = clienteUsuarioIdUsuario;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (idContrato != null ? idContrato.hashCode() : 0);
         hash += (clienteIdCliente != null ? clienteIdCliente.hashCode() : 0);
-        hash += (clienteUsuarioIdUsuario != null ? clienteUsuarioIdUsuario.hashCode() : 0);
         return hash;
     }
 
@@ -87,15 +73,12 @@ public class ContratoPK implements Serializable {
         if ((this.clienteIdCliente == null && other.clienteIdCliente != null) || (this.clienteIdCliente != null && !this.clienteIdCliente.equals(other.clienteIdCliente))) {
             return false;
         }
-        if ((this.clienteUsuarioIdUsuario == null && other.clienteUsuarioIdUsuario != null) || (this.clienteUsuarioIdUsuario != null && !this.clienteUsuarioIdUsuario.equals(other.clienteUsuarioIdUsuario))) {
-            return false;
-        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "modelo.ContratoPK[ idContrato=" + idContrato + ", clienteIdCliente=" + clienteIdCliente + ", clienteUsuarioIdUsuario=" + clienteUsuarioIdUsuario + " ]";
+        return "modelo.ContratoPK[ idContrato=" + idContrato + ", clienteIdCliente=" + clienteIdCliente + " ]";
     }
     
 }

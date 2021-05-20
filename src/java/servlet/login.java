@@ -65,9 +65,9 @@ public class login extends HttpServlet {
         if(u==null)
             request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
         else{
-            String nombre = u.getActivo().getNombre();            
-            request.setAttribute("nombre", nombre);
-            request.getRequestDispatcher("WEB-INF/agregarUsuario.jsp").forward(request, response);
+            //String nombre = u.getActivo().getNombre();            
+            //request.setAttribute("nombre", nombre);
+            request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
         }
     }
 
@@ -84,16 +84,16 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         //processRequest(request, response);
         HttpSession s = request.getSession();
-        String usuario = request.getParameter("uname");
-        String pass = request.getParameter("psw");
+        String email = request.getParameter("uname");
+        String password = request.getParameter("psw");
         
         User u = new User();
         
-        if(u.login(usuario, pass)){
+        if(u.login(email, password)){
             s.setAttribute("user", u);
-            String nombre = u.getActivo().getNombre();            
-            request.setAttribute("nombre", nombre);
-            request.getRequestDispatcher("WEB-INF/agregarUsuario.jsp").forward(request, response);
+            //String nombre = u.getActivo().getNombre();            
+            //request.setAttribute("nombre", nombre);
+            request.getRequestDispatcher("WEB-INF/usuario/listarUsuario.jsp").forward(request, response);
         }else{
             request.setAttribute("mensaje", "Datos incorrectos");
             request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);

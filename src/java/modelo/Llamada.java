@@ -6,23 +6,26 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,23 +36,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Llamada.findAll", query = "SELECT l FROM Llamada l")
-    , @NamedQuery(name = "Llamada.findByIdLlamada", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.idLlamada = :idLlamada")
+    , @NamedQuery(name = "Llamada.findByIdLlamada", query = "SELECT l FROM Llamada l WHERE l.idLlamada = :idLlamada")
     , @NamedQuery(name = "Llamada.findByFechallamada", query = "SELECT l FROM Llamada l WHERE l.fechallamada = :fechallamada")
-    , @NamedQuery(name = "Llamada.findByHorallamada", query = "SELECT l FROM Llamada l WHERE l.horallamada = :horallamada")
-    , @NamedQuery(name = "Llamada.findByCosto", query = "SELECT l FROM Llamada l WHERE l.costo = :costo")
-    , @NamedQuery(name = "Llamada.findByDescripcion", query = "SELECT l FROM Llamada l WHERE l.descripcion = :descripcion")
-    , @NamedQuery(name = "Llamada.findByExtraIdSolicitudes", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.extraIdSolicitudes = :extraIdSolicitudes")
-    , @NamedQuery(name = "Llamada.findByExtraContratoIdContrato", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.extraContratoIdContrato = :extraContratoIdContrato")
-    , @NamedQuery(name = "Llamada.findByExtraContCliIdCliente", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.extraContCliIdCliente = :extraContCliIdCliente")
-    , @NamedQuery(name = "Llamada.findByExtraContCliUsIdUsuario", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.extraContCliUsIdUsuario = :extraContCliUsIdUsuario")
-    , @NamedQuery(name = "Llamada.findByServicioIdServicio", query = "SELECT l FROM Llamada l WHERE l.llamadaPK.servicioIdServicio = :servicioIdServicio")
-    , @NamedQuery(name = "Llamada.findByIdCliente", query = "SELECT l FROM Llamada l WHERE l.idCliente = :idCliente")
-    , @NamedQuery(name = "Llamada.findByIdSolicitudes", query = "SELECT l FROM Llamada l WHERE l.idSolicitudes = :idSolicitudes")})
+    , @NamedQuery(name = "Llamada.findByDescripcionllamada", query = "SELECT l FROM Llamada l WHERE l.descripcionllamada = :descripcionllamada")
+    , @NamedQuery(name = "Llamada.findByCantllamada", query = "SELECT l FROM Llamada l WHERE l.cantllamada = :cantllamada")})
 public class Llamada implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected LlamadaPK llamadaPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID_LLAMADA")
+    private BigDecimal idLlamada;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHALLAMADA")
@@ -57,64 +56,39 @@ public class Llamada implements Serializable {
     private Date fechallamada;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "HORALLAMADA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date horallamada;
+    @Size(min = 1, max = 200)
+    @Column(name = "DESCRIPCIONLLAMADA")
+    private String descripcionllamada;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "COSTO")
-    private BigInteger costo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 500)
-    @Column(name = "DESCRIPCION")
-    private String descripcion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_CLIENTE")
-    private BigInteger idCliente;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID_SOLICITUDES")
-    private BigInteger idSolicitudes;
-    @JoinColumns({
-        @JoinColumn(name = "EXTRA_ID_SOLICITUDES", referencedColumnName = "ID_SOLICITUDES", insertable = false, updatable = false)
-        , @JoinColumn(name = "EXTRA_CONTRATO_ID_CONTRATO", referencedColumnName = "CONTRATO_ID_CONTRATO", insertable = false, updatable = false)
-        , @JoinColumn(name = "EXTRA_CONT_CLI_ID_CLIENTE", referencedColumnName = "CONTRATO_CLIENTE_ID_CLIENTE", insertable = false, updatable = false)
-        , @JoinColumn(name = "EXTRA_CONT_CLI_US_ID_USUARIO", referencedColumnName = "CONTRATO_CLI_US_ID_USUARIO", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private Extra extra;
-    @JoinColumn(name = "SERVICIO_ID_SERVICIO", referencedColumnName = "ID_SERVICIO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Servicio servicio;
+    @Column(name = "CANTLLAMADA")
+    private BigInteger cantllamada;
+    @OneToMany(mappedBy = "llamadaIdLlamada")
+    private Collection<PlanServicio> planServicioCollection;
+    @JoinColumn(name = "PROFESIONAL_ID_PROFESIONAL", referencedColumnName = "ID_PROFESIONAL")
+    @ManyToOne
+    private Profesional profesionalIdProfesional;
 
     public Llamada() {
     }
 
-    public Llamada(LlamadaPK llamadaPK) {
-        this.llamadaPK = llamadaPK;
+    public Llamada(BigDecimal idLlamada) {
+        this.idLlamada = idLlamada;
     }
 
-    public Llamada(LlamadaPK llamadaPK, Date fechallamada, Date horallamada, BigInteger costo, String descripcion, BigInteger idCliente, BigInteger idSolicitudes) {
-        this.llamadaPK = llamadaPK;
+    public Llamada(BigDecimal idLlamada, Date fechallamada, String descripcionllamada, BigInteger cantllamada) {
+        this.idLlamada = idLlamada;
         this.fechallamada = fechallamada;
-        this.horallamada = horallamada;
-        this.costo = costo;
-        this.descripcion = descripcion;
-        this.idCliente = idCliente;
-        this.idSolicitudes = idSolicitudes;
+        this.descripcionllamada = descripcionllamada;
+        this.cantllamada = cantllamada;
     }
 
-    public Llamada(BigInteger idLlamada, BigInteger extraIdSolicitudes, BigInteger extraContratoIdContrato, BigInteger extraContCliIdCliente, BigInteger extraContCliUsIdUsuario, BigInteger servicioIdServicio) {
-        this.llamadaPK = new LlamadaPK(idLlamada, extraIdSolicitudes, extraContratoIdContrato, extraContCliIdCliente, extraContCliUsIdUsuario, servicioIdServicio);
+    public BigDecimal getIdLlamada() {
+        return idLlamada;
     }
 
-    public LlamadaPK getLlamadaPK() {
-        return llamadaPK;
-    }
-
-    public void setLlamadaPK(LlamadaPK llamadaPK) {
-        this.llamadaPK = llamadaPK;
+    public void setIdLlamada(BigDecimal idLlamada) {
+        this.idLlamada = idLlamada;
     }
 
     public Date getFechallamada() {
@@ -125,66 +99,43 @@ public class Llamada implements Serializable {
         this.fechallamada = fechallamada;
     }
 
-    public Date getHorallamada() {
-        return horallamada;
+    public String getDescripcionllamada() {
+        return descripcionllamada;
     }
 
-    public void setHorallamada(Date horallamada) {
-        this.horallamada = horallamada;
+    public void setDescripcionllamada(String descripcionllamada) {
+        this.descripcionllamada = descripcionllamada;
     }
 
-    public BigInteger getCosto() {
-        return costo;
+    public BigInteger getCantllamada() {
+        return cantllamada;
     }
 
-    public void setCosto(BigInteger costo) {
-        this.costo = costo;
+    public void setCantllamada(BigInteger cantllamada) {
+        this.cantllamada = cantllamada;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    @XmlTransient
+    public Collection<PlanServicio> getPlanServicioCollection() {
+        return planServicioCollection;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setPlanServicioCollection(Collection<PlanServicio> planServicioCollection) {
+        this.planServicioCollection = planServicioCollection;
     }
 
-    public BigInteger getIdCliente() {
-        return idCliente;
+    public Profesional getProfesionalIdProfesional() {
+        return profesionalIdProfesional;
     }
 
-    public void setIdCliente(BigInteger idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public BigInteger getIdSolicitudes() {
-        return idSolicitudes;
-    }
-
-    public void setIdSolicitudes(BigInteger idSolicitudes) {
-        this.idSolicitudes = idSolicitudes;
-    }
-
-    public Extra getExtra() {
-        return extra;
-    }
-
-    public void setExtra(Extra extra) {
-        this.extra = extra;
-    }
-
-    public Servicio getServicio() {
-        return servicio;
-    }
-
-    public void setServicio(Servicio servicio) {
-        this.servicio = servicio;
+    public void setProfesionalIdProfesional(Profesional profesionalIdProfesional) {
+        this.profesionalIdProfesional = profesionalIdProfesional;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (llamadaPK != null ? llamadaPK.hashCode() : 0);
+        hash += (idLlamada != null ? idLlamada.hashCode() : 0);
         return hash;
     }
 
@@ -195,7 +146,7 @@ public class Llamada implements Serializable {
             return false;
         }
         Llamada other = (Llamada) object;
-        if ((this.llamadaPK == null && other.llamadaPK != null) || (this.llamadaPK != null && !this.llamadaPK.equals(other.llamadaPK))) {
+        if ((this.idLlamada == null && other.idLlamada != null) || (this.idLlamada != null && !this.idLlamada.equals(other.idLlamada))) {
             return false;
         }
         return true;
@@ -203,7 +154,7 @@ public class Llamada implements Serializable {
 
     @Override
     public String toString() {
-        return "modelo.Llamada[ llamadaPK=" + llamadaPK + " ]";
+        return "modelo.Llamada[ idLlamada=" + idLlamada + " ]";
     }
     
 }
