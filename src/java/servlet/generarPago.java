@@ -7,22 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Usuario;
-import servicio.User;
 
 /**
  *
  * @author norar
  */
-@WebServlet(name = "agregarUsuario", urlPatterns = {"usuario/agregarUsuario"})
-public class agregarUsuario extends HttpServlet {
+public class generarPago extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +35,10 @@ public class agregarUsuario extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet agregarUsuario</title>");            
+            out.println("<title>Servlet generarPago</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet agregarUsuario at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet generarPago at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,8 +57,7 @@ public class agregarUsuario extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-    
-        request.getRequestDispatcher("WEB-INF/usuario/agregarUsuario.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/cliente/pago.jsp").forward(request, response);
     }
 
     /**
@@ -78,30 +71,8 @@ public class agregarUsuario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession s = request.getSession();
-        
-        User u = (User)s.getAttribute("user");
-        if(u==null)
-            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
-        else{
-            String nombre = request.getParameter("nombre");
-            String tipo = request.getParameter("tipo");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
-            
-            Usuario us = new Usuario(
-                    nombre,
-                    Integer.parseInt(tipo),
-                    email,
-                    password
-            );
-            u.agregarUsuario(us);
-            request.setAttribute("mensaje","Usuario Agregado Exitosamente");
-            request.getRequestDispatcher("WEB-INF/usuario/agregarUsuario.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
-
 
     /**
      * Returns a short description of the servlet.

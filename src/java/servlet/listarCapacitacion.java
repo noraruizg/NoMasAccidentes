@@ -7,22 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Cliente;
-import servicio.Cli;
 
 /**
  *
  * @author norar
  */
-@WebServlet(name = "listarCliente", urlPatterns = {"/listarCliente"})
-public class listarCliente extends HttpServlet {
+public class listarCapacitacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +35,10 @@ public class listarCliente extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet listarCliente</title>");            
+            out.println("<title>Servlet listarCapacitacion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet listarCliente at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet listarCapacitacion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,16 +57,7 @@ public class listarCliente extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession s = request.getSession();
-        
-        Cli c= (Cli)s.getAttribute("cli");
-        if(c==null)
-            request.getRequestDispatcher("WEB-INF/cliente/listarCliente.jsp").forward(request, response);
-        else{
-            ArrayList<Cliente> clientes = c.getCliente();
-            request.setAttribute("clientes", clientes);
-            request.getRequestDispatcher("WEB-INF/cliente/listarCliente.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("WEB-INF/capacitacion/listarCapacitaciones.jsp").forward(request, response);
     }
 
     /**
@@ -86,11 +71,8 @@ public class listarCliente extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       HttpSession s = request.getSession();
+        processRequest(request, response);
         
-        
-            request.getRequestDispatcher("WEB-INF/contrato/listarCliente.jsp").forward(request, response);
     }
 
     /**

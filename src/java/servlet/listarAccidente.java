@@ -8,7 +8,6 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,8 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author norar
  */
-@WebServlet(name = "reportes", urlPatterns = {"/reportes"})
-public class reportes extends HttpServlet {
+public class listarAccidente extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +35,10 @@ public class reportes extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet reportes</title>");            
+            out.println("<title>Servlet listarAccidente</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<a href=\"global\" class=\"btn btn-rep\">Reporte Global</a>");
+            out.println("<h1>Servlet listarAccidente at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +56,8 @@ public class reportes extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       // processRequest(request, response);
+       request.getRequestDispatcher("WEB-INF/profesional/listarAccidente.jsp").forward(request, response);
     }
 
     /**

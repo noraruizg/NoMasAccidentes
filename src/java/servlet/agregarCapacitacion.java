@@ -7,23 +7,16 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Profesional;
-import servicio.Prof;
-import servicio.User;
 
 /**
  *
  * @author norar
  */
-@WebServlet(name = "listarProfesional", urlPatterns = {"/listarProfesional"})
-public class listarProfesional extends HttpServlet {
+public class agregarCapacitacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +35,10 @@ public class listarProfesional extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet listarProfesional</title>");            
+            out.println("<title>Servlet agregarCapacitacion</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet listarProfesional at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet agregarCapacitacion at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,16 +57,7 @@ public class listarProfesional extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        HttpSession s = request.getSession();
-        
-        User u= (User)s.getAttribute("user");
-        if(u==null)
-            request.getRequestDispatcher("WEB-INF/profesional/listarProfesional.jsp").forward(request, response);
-        else{
-            ArrayList<Profesional> profesionales = u.getProfesional();
-            request.setAttribute("profesionales", profesionales);
-            request.getRequestDispatcher("WEB-INF/profesional/listarProfesional.jsp").forward(request, response);
-        }
+        request.getRequestDispatcher("WEB-INF/capacitacion/agregarCapacitacion.jsp").forward(request, response);
     }
 
     /**
@@ -87,11 +71,7 @@ public class listarProfesional extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession s = request.getSession();
-        
-        
-            request.getRequestDispatcher("WEB-INF/profesional/listarProfesional.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

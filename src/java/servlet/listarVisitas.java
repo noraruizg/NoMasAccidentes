@@ -8,20 +8,15 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import modelo.Cliente;
-import servicio.Cli;
 
 /**
  *
  * @author norar
  */
-@WebServlet(name = "agregarCliente", urlPatterns = {"/agregarCliente"})
-public class agregarCliente extends HttpServlet {
+public class listarVisitas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +35,10 @@ public class agregarCliente extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet agregarCliente</title>");            
+            out.println("<title>Servlet listarVisitas</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet agregarCliente at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet listarVisitas at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,8 +56,7 @@ public class agregarCliente extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       // processRequest(request, response);
-       request.getRequestDispatcher("WEB-INF/cliente/agregarCliente.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -76,24 +70,7 @@ public class agregarCliente extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-         HttpSession s = request.getSession();
-        
-        Cli c = (Cli)s.getAttribute("cli");
-        if(c==null)
-            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
-        else{
-            String nombre = request.getParameter("nombre");
-            String rubro = request.getParameter("rubro");
-            
-            Cliente cl = new Cliente(
-                    nombre,
-                    rubro
-            );
-            c.agregarCliente(cl);
-            request.setAttribute("mensaje","Cliente Agregado Exitosamente");
-            request.getRequestDispatcher("WEB-INF/cliente/agregarCliente.jsp").forward(request, response);
-        }
+        processRequest(request, response);
     }
 
     /**
