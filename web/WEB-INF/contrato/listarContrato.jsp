@@ -85,7 +85,7 @@
             <li><a href="listarProfesional">Profesional</a></li>
             <li><a href="listarCliente">Clientes</a></li>
             <li><a href="listarContrato"class="active">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
+            <li><a href="">Reportes</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>

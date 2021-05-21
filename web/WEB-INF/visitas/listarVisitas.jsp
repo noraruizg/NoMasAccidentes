@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarUsuario
-    Created on : 13-04-2021, 0:30:52
+    Document   : listarVisitas
+    Created on : 08-05-2021, 20:46:54
     Author     : norar
 --%>
 
@@ -9,10 +9,13 @@
 <html>
     <head>
         <style>
+            body{
+                background-color: #EBFBE8;
+            }
             table {
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
-                width: 100%;
+                width: 80%;
             }
 
             td, th {
@@ -51,27 +54,31 @@
         .active {
             background-color: #4CAF50;
         }
+        .btn-buscar,
+.btn-todos,
+.btn-crear {
+	
+	color: black;
+	border: 1px solid #fbfbf8;
+}
+
+.btn-sgant {
+	background-color: #A1FF6A;
+	color: #020747;
+}
+
+.btn-editar {
+	background: #93937f;
+	color: #fbfbf8;
+}
+
+.btn-eliminar {
+	background: #bf270f;
+	color: #fbfbf8;
+}
         </style>
     </head>
     <body>
-        <ul>
-            
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional"class="active">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
-
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
-        </ul>
-        <h2>Tipo de Reportes</h2>
-
-        <div class="input-group-prepend center">
-						
-            <a href="global" class="btn btn-rep">Reporte Global</a>
-            <a href="cliente" class="btn btn-rep">Reporte Cliente</a>
-            <a href="profesional" class="btn btn-rep">Reporte Profesional</a>
-	</div>
-
+        <h1>Hello World!</h1>
     </body>
 </html>

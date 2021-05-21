@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarUsuario
-    Created on : 13-04-2021, 0:30:52
+    Document   : listarCapacitaciones
+    Created on : 08-05-2021, 20:46:37
     Author     : norar
 --%>
 
@@ -81,44 +81,39 @@
     <body>
         <ul>
             
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional"class="active">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
+            <li><a href="listarCapacitacion"class="active">Capacitaciones</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="">Checklist</a></li>
 
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
-        <h2>Listado de Profesionales</h2>
+        <h2>Listado de Capacitaciones</h2>
         <div class="input-group mb-3">
 					
 		<input type="text" value="" name="buscar" placeholder="Ingrese nombre para buscar" aria-describedby="basic-addon1">
                     
-			<button class="btn btn-buscar" type="submit">Buscar Usuario</button>
-			<a href="listarProfesional" class="btn btn-todos" >Ver todos</a>
-			<a href="agregarProfesional" class="btn btn-crear ">Crear Profesional</a>
-            </div>
-	</div>
-        <table class="table table-sm table-striped">
+			<button class="btn btn-buscar" type="submit">Buscar Capacitacion</button>
+			<a href="listarCapacitacion" class="btn btn-todos" >Ver todos</a>
+			<a href="agregarCapacitacion" class="btn btn-crear ">Agregar Capacitacion</a>
+        </div>
+	<table class="table table-sm table-striped">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Nombre</th>
-                <th>Apellido Paterno</th>
-                <th>Apellido Materno</th>
-                <th>Cargo</th>
-                <th>Pago</th>
+                <th>Fecha</th>
+                <th>Descripcion</th>
+                <th>Cant.Asistentes</th>
                 <th>Opciones</th>
+
+
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${profesionales}" var="profesional">
+            <c:forEach items="${capacitaciones}" var="capacitacion">
                 <tr>
-                    <td>${profesional.idProfesional}</td>
-                    <td>${profesional.nombre}</td>
-                    <td>${profesional.aPaterno}</td>
-                    <td>${profesional.aMaterno}</td>
-                    <td>${profesional.cargo}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                     <td></td>
                 </tr>

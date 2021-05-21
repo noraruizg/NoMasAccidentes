@@ -1,19 +1,17 @@
 <%-- 
-    Document   : formulario
-    Created on : 03-04-2021, 19:04:15
+    Document   : asistentes
+    Created on : 08-05-2021, 20:07:18
     Author     : norar
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
     <style>
         body{
                 background-color: #EBFBE8;
             }
-        input[type=text],input[type=password],input[type=number],input[type=email], select {
+         input[type=text],input[type=password],input[type=number],input[type=email], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -72,44 +70,39 @@
     </style>
     <body>
         <ul>
-            <li><a href="listarUsuario"class="active">Usuarios</a></li>
-            <li><a href="listarProfesional">Profesionales</a></li>
+            <li><a href="listarUsuario">Usuarios</a></li>
+            <li><a href="listarProfesional">Profesional</a></li>
             <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
+            <li><a href="listarContrato" class="active">Contratos</a></li>
             <li><a href="listarReportes">Reportes</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Agregar Usuario</h3>
-
+        <h3>Crear Asistente</h3>
         <div>
-            <form action="agregarUsuario" method="POST">
-                <label>Nombre</label>
-                <input type="text" name="nombre" placeholder="Nombre de usuario/empresa" required>
-
-                <label >Tipo de Usuario</label>
-                <select name="tipo">
-                    <option value="1">Administrador</option>
-                    <option value="2">Profesional</option> 
-                    <option value="3">Cliente</option>  
-                </select>
-
-                <label>Email</label>
-                <input type="email" name="email" required>
-
-                <label>Contraseña</label>
-                <input type="password" name="pass" required>
+            <form action="asistentes" method="POST">
+                <label>Rut</label>
+                <input type="text" name="rut" required>
                 
-                <label>Reingresar Contraseña</label>
-                <input type="password" name="rpass" required>
+                <label>Nombre</label>
+                <input type="text" name="nombre" required>
+                
+                <label>Apellido Paterno</label>
+                <input type="text" name="apPaternoAsistente" required>
+                
+                <label>Apellido Materno</label>
+                <input type="text" name="apMaternoAsistente" required>
+                <br><br>   
 
-                <input type="submit" value="Crear Usuario">
+                <input type="submit" value="Generar Asistente">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
             </c:forEach>
         </div>
-
+    </body>
+    <body>
+        <h1>Hello World!</h1>
     </body>
 </html>

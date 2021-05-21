@@ -1,13 +1,11 @@
 <%-- 
-    Document   : formulario
-    Created on : 03-04-2021, 19:04:15
+    Document   : visita
+    Created on : 08-05-2021, 20:16:54
     Author     : norar
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
     <style>
         body{
@@ -76,36 +74,29 @@
             <li><a href="listarProfesional">Profesional</a></li>
             <li><a href="listarCliente">Clientes</a></li>
             <li><a href="listarContrato" class="active">Contratos</a></li>
-            <li><a href="">Reportes</a></li>
+            <li><a href="listarReportes">Reportes</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Agregar Contrato</h3>
-
+        <h3>Planificar Visita</h3>
         <div>
-            <form action="agregarContrato" method="POST">
-                <label>Fecha de Inicio</label>
-                <input type="date" name="fInicio" required>
+            <form action="visita" method="POST">
                 
-                <label>Fecha de Vencimiento</label>
-                <input type="date" name="fVencimiento" required>
-                <br><br>
+                <label>Fecha Visita</label>
+                <input type="date" name="fechaVisita" required>
+                
                 <label>Profesional</label>
                 <select name="id_Profesional">
-                    <option value="sinAsignar">Sin Asignar</option>
+                    <option value="0">Sin Asignar</option>
                 </select>
-                <label>Plan de Servicio</label>
-                <select name="id_PlanServicio">
-                    <option value="sinAsignar">Sin Asignar</option>
-                </select>
+                <br><br>   
 
-                <input type="submit" value="Crear Contrato">
+                <input type="submit" value="Planificar Visita">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
             </c:forEach>
         </div>
-
     </body>
 </html>

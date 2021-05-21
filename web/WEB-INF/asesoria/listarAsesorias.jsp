@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarUsuario
-    Created on : 13-04-2021, 0:30:52
+    Document   : listarAsesorias
+    Created on : 13-05-2021, 11:44:12
     Author     : norar
 --%>
 
@@ -16,7 +16,6 @@
                 font-family: arial, sans-serif;
                 border-collapse: collapse;
                 width: 80%;
-                
             }
 
             td, th {
@@ -33,7 +32,7 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-            background-color: #000000;
+            background-color: #333;
         }
 
         li {
@@ -55,7 +54,7 @@
         .active {
             background-color: #4CAF50;
         }
-.btn-buscar,
+        .btn-buscar,
 .btn-todos,
 .btn-crear {
 	
@@ -80,33 +79,28 @@
         </style>
     </head>
     <body>
-        <ul class="navbar-nav mr-auto">
+        <ul>
             
-            <li><a href="listarUsuario" class="active">Usuarios</a></li>
-            <li><a href="listarProfesional">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
+            <li><a href="asesoriaEspecial"class="active">Asesorias</a></li>
+            <li><a href="">Checklist</a></li>
 
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
-        <h2>Listado de Usuarios</h2>
+        <h2>Listado de Asesorias</h2>
         <div class="input-group mb-3">
 					
 		<input type="text" value="" name="buscar" placeholder="Ingrese nombre para buscar" aria-describedby="basic-addon1">
                     
-			<button class="btn btn-buscar" type="submit">Buscar Usuario</button>
-			<a href="listarUsuario" class="btn btn-todos" >Ver todos</a>
-			<a href="agregarUsuario" class="btn btn-crear ">Crear Usuario</a>
-            </div>
-	</div>
-        
-        <table class="table table-sm table-striped">
+			<button class="btn btn-buscar" type="submit">Buscar Asesoria</button>
+			<a href="listarAsesoria" class="btn btn-todos" >Ver todos</a>
+			<a href="asesoriaEspecial" class="btn btn-crear ">Agregar Asesoria</a>
+        </div>
+	<table class="table table-sm table-striped">
             <thead>
             <tr>
                 <th>#</th>
-                <th>Nombre</th>
-                <th>Email</th>
+                <th>Fecha</th>
                 <th>Tipo</th>
                 <th>Opciones</th>
 
@@ -114,12 +108,12 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${usrs}" var="usuario">
+            <c:forEach items="${asesorias}" var="asesoria">
                 <tr>
                     <td></td>
-                    <td>${usuario.nombre}</td>
-                    <td>${usuario.tipo}</td>
-                    <td>${usuario.email}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                     <td></td>
                 </tr>
             </c:forEach>
