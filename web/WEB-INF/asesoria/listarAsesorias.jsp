@@ -80,7 +80,7 @@
     </head>
     <body>
         <ul>
-            
+            <li><a href="listarContrato"class="active">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="asesoriaEspecial"class="active">Asesorias</a></li>
             <li><a href="">Checklist</a></li>

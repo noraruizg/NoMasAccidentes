@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarCapacitaciones
-    Created on : 08-05-2021, 20:46:37
+    Document   : homeProfesional
+    Created on : 19-05-2021, 19:46:30
     Author     : norar
 --%>
 
@@ -81,50 +81,15 @@
     <body>
         <ul>
             <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarCapacitacion"class="active">Capacitaciones</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
             <li><a href="">Checklist</a></li>
 
-            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h2>Listado de Capacitaciones</h2>
+        
         <div class="input-group mb-3">
-					
-		<input type="text" value="" name="buscar" placeholder="Ingrese nombre para buscar" aria-describedby="basic-addon1">
-                    
-			<button class="btn btn-buscar" type="submit">Buscar Capacitacion</button>
-			<a href="listarCapacitacion" class="btn btn-todos" >Ver todos</a>
-			<a href="agregarCapacitacion" class="btn btn-crear ">Agregar Capacitacion</a>
+            <h1>Bienvenido Profesional</h1>
         </div>
-	<table class="table table-sm table-striped">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Fecha</th>
-                <th>Descripcion</th>
-                <th>Cant.Asistentes</th>
-                <th>Opciones</th>
-
-
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${capacitaciones}" var="capacitacion">
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
-        <div class="clearfix"></div>
-	<hr>
-	<div class="text-right">
-	<a href="?page=1" class="btn btn-sgant" rel="next">Siguiente →</a>
-
-	</div>
     </body>
 </html>

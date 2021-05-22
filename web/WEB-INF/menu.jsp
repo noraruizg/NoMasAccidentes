@@ -1,6 +1,6 @@
 <%-- 
-    Document   : asesoriaEspecial
-    Created on : 08-05-2021, 20:51:00
+    Document   : menu
+    Created on : 13-05-2021, 9:52:48
     Author     : norar
 --%>
 
@@ -69,34 +69,11 @@
         }
     </style>
     <body>
-        <ul>
-            <li><a href="listarContrato">Contratos</a></li>
-            <li><a href="listarCapacitacion">Capacitaciones</a></li>
-            <li><a href="asesoriaEspecial"class="active">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+        <ul><li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li></ul>
+        <h3>Menu Usuarios</h3>
+        
 
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
-        </ul>
-        <h3>Solicitar Asesoria Especial</h3>
-        <div>
-            <form action="asesoriaEspecial" method="POST">
-                <label>Tipo de Pago</label>
-                <select name="tipoPago">
-                    <option value="sinAsignar">Sin Asignar</option>
-                    <option value="debito">Debito</option>
-                    <option value="debito">Crebito</option>
-                </select>
-                
-                <label>Monto</label>
-                <input type="text" name="monto" required>
-                <br><br>   
-
-                <input type="submit" value="Solicitar Asesoria Especial">
-            </form>
-            <h3>${mensaje}</h3>
-            <c:forEach items="${mensajes}" var="mensaje">
-                <h3>${mensaje}</h3>
-            </c:forEach>
-        </div>
+        <a href="profesional">Profesional</a><br>
+        <a href="cliente">Cliente</a>
     </body>
 </html>
