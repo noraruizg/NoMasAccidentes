@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -45,11 +43,11 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_USUARIO")
-    private BigDecimal idUsuario;
+    private int idUsuario;
     @Basic(optional = false)
     @NotNull
     @Column(name = "TIPOUSUARIO")
-    private BigInteger tipousuario;
+    private int tipousuario;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
@@ -77,31 +75,31 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(BigDecimal idUsuario) {
+    public Usuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(BigDecimal idUsuario, BigInteger tipousuario, String email, String password, String estado) {
-        this.idUsuario = idUsuario;
+    public Usuario( int tipousuario, String email, String password, String estado) {
+      //  this.idUsuario = idUsuario;
         this.tipousuario = tipousuario;
         this.email = email;
         this.password = password;
         this.estado = estado;
     }
 
-    public BigDecimal getIdUsuario() {
+    public int getIdUsuario() {
         return idUsuario;
     }
 
-    public void setIdUsuario(BigDecimal idUsuario) {
+    public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public BigInteger getTipousuario() {
+    public int getTipousuario() {
         return tipousuario;
     }
 
-    public void setTipousuario(BigInteger tipousuario) {
+    public void setTipousuario(int tipousuario) {
         this.tipousuario = tipousuario;
     }
 
@@ -151,26 +149,6 @@ public class Usuario implements Serializable {
 
     public void setAlertaIdAlerta(Alerta alertaIdAlerta) {
         this.alertaIdAlerta = alertaIdAlerta;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idUsuario != null ? idUsuario.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.idUsuario == null && other.idUsuario != null) || (this.idUsuario != null && !this.idUsuario.equals(other.idUsuario))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

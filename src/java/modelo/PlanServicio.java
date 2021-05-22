@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -62,7 +60,7 @@ public class PlanServicio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PLAN_SERVICIO")
-    private BigDecimal idPlanServicio;
+    private int idPlanServicio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -76,7 +74,7 @@ public class PlanServicio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "COSTOPLAN")
-    private BigInteger costoplan;
+    private int costoplan;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
@@ -86,23 +84,23 @@ public class PlanServicio implements Serializable {
     public PlanServicio() {
     }
 
-    public PlanServicio(BigDecimal idPlanServicio) {
+    public PlanServicio(int idPlanServicio) {
         this.idPlanServicio = idPlanServicio;
     }
 
-    public PlanServicio(BigDecimal idPlanServicio, String nombreplan, String descripcionplan, BigInteger costoplan, String estado) {
-        this.idPlanServicio = idPlanServicio;
+    public PlanServicio( String nombreplan, String descripcionplan, int costoplan, String estado) {
+       // this.idPlanServicio = idPlanServicio;
         this.nombreplan = nombreplan;
         this.descripcionplan = descripcionplan;
         this.costoplan = costoplan;
         this.estado = estado;
     }
 
-    public BigDecimal getIdPlanServicio() {
+    public int getIdPlanServicio() {
         return idPlanServicio;
     }
 
-    public void setIdPlanServicio(BigDecimal idPlanServicio) {
+    public void setIdPlanServicio(int idPlanServicio) {
         this.idPlanServicio = idPlanServicio;
     }
 
@@ -122,11 +120,11 @@ public class PlanServicio implements Serializable {
         this.descripcionplan = descripcionplan;
     }
 
-    public BigInteger getCostoplan() {
+    public int getCostoplan() {
         return costoplan;
     }
 
-    public void setCostoplan(BigInteger costoplan) {
+    public void setCostoplan(int costoplan) {
         this.costoplan = costoplan;
     }
 
@@ -136,26 +134,6 @@ public class PlanServicio implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPlanServicio != null ? idPlanServicio.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PlanServicio)) {
-            return false;
-        }
-        PlanServicio other = (PlanServicio) object;
-        if ((this.idPlanServicio == null && other.idPlanServicio != null) || (this.idPlanServicio != null && !this.idPlanServicio.equals(other.idPlanServicio))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

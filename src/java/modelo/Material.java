@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -46,7 +44,7 @@ public class Material implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_MATERIALES")
-    private BigDecimal idMateriales;
+    private int idMateriales;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -55,26 +53,26 @@ public class Material implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "COSTOMATERIALES")
-    private BigInteger costomateriales;
+    private int costomateriales;
 
     public Material() {
     }
 
-    public Material(BigDecimal idMateriales) {
+    public Material(int idMateriales) {
         this.idMateriales = idMateriales;
     }
 
-    public Material(BigDecimal idMateriales, String nombremateriles, BigInteger costomateriales) {
-        this.idMateriales = idMateriales;
+    public Material( String nombremateriles, int costomateriales) {
+       // this.idMateriales = idMateriales;
         this.nombremateriles = nombremateriles;
         this.costomateriales = costomateriales;
     }
 
-    public BigDecimal getIdMateriales() {
+    public int getIdMateriales() {
         return idMateriales;
     }
 
-    public void setIdMateriales(BigDecimal idMateriales) {
+    public void setIdMateriales(int idMateriales) {
         this.idMateriales = idMateriales;
     }
 
@@ -86,33 +84,14 @@ public class Material implements Serializable {
         this.nombremateriles = nombremateriles;
     }
 
-    public BigInteger getCostomateriales() {
+    public int getCostomateriales() {
         return costomateriales;
     }
 
-    public void setCostomateriales(BigInteger costomateriales) {
+    public void setCostomateriales(int costomateriales) {
         this.costomateriales = costomateriales;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idMateriales != null ? idMateriales.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Material)) {
-            return false;
-        }
-        Material other = (Material) object;
-        if ((this.idMateriales == null && other.idMateriales != null) || (this.idMateriales != null && !this.idMateriales.equals(other.idMateriales))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

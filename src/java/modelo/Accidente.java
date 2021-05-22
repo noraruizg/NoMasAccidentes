@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -53,7 +52,7 @@ public class Accidente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_ACCIDENTE")
-    private BigDecimal idAccidente;
+    private int idAccidente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
@@ -68,21 +67,21 @@ public class Accidente implements Serializable {
     public Accidente() {
     }
 
-    public Accidente(BigDecimal idAccidente) {
+    public Accidente(int idAccidente) {
         this.idAccidente = idAccidente;
     }
 
-    public Accidente(BigDecimal idAccidente, String descripcionaccidente, Date fechaaccidente) {
-        this.idAccidente = idAccidente;
+    public Accidente(String descripcionaccidente, Date fechaaccidente) {
+        //this.idAccidente = idAccidente;
         this.descripcionaccidente = descripcionaccidente;
         this.fechaaccidente = fechaaccidente;
     }
 
-    public BigDecimal getIdAccidente() {
+    public int getIdAccidente() {
         return idAccidente;
     }
 
-    public void setIdAccidente(BigDecimal idAccidente) {
+    public void setIdAccidente(int idAccidente) {
         this.idAccidente = idAccidente;
     }
 
@@ -102,25 +101,6 @@ public class Accidente implements Serializable {
         this.fechaaccidente = fechaaccidente;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAccidente != null ? idAccidente.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Accidente)) {
-            return false;
-        }
-        Accidente other = (Accidente) object;
-        if ((this.idAccidente == null && other.idAccidente != null) || (this.idAccidente != null && !this.idAccidente.equals(other.idAccidente))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

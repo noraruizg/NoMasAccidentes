@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -46,7 +44,7 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PAGO")
-    private BigDecimal idPago;
+    private int idPago;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAPAGO")
@@ -60,7 +58,7 @@ public class Pago implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "MONTO")
-    private BigInteger monto;
+    private int monto;
     @JoinColumns({
         @JoinColumn(name = "CONTRATO_ID_CONTRATO", referencedColumnName = "ID_CONTRATO")
         , @JoinColumn(name = "CONTRATO_CLIENTE_ID_CLIENTE", referencedColumnName = "CLIENTE_ID_CLIENTE")})
@@ -70,22 +68,22 @@ public class Pago implements Serializable {
     public Pago() {
     }
 
-    public Pago(BigDecimal idPago) {
+    public Pago(int idPago) {
         this.idPago = idPago;
     }
 
-    public Pago(BigDecimal idPago, Date fechapago, String tipopago, BigInteger monto) {
+    public Pago( Date fechapago, String tipopago, int monto) {
         this.idPago = idPago;
         this.fechapago = fechapago;
         this.tipopago = tipopago;
         this.monto = monto;
     }
 
-    public BigDecimal getIdPago() {
+    public int getIdPago() {
         return idPago;
     }
 
-    public void setIdPago(BigDecimal idPago) {
+    public void setIdPago(int idPago) {
         this.idPago = idPago;
     }
 
@@ -105,11 +103,11 @@ public class Pago implements Serializable {
         this.tipopago = tipopago;
     }
 
-    public BigInteger getMonto() {
+    public int getMonto() {
         return monto;
     }
 
-    public void setMonto(BigInteger monto) {
+    public void setMonto(int monto) {
         this.monto = monto;
     }
 
@@ -121,25 +119,6 @@ public class Pago implements Serializable {
         this.contrato = contrato;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPago != null ? idPago.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Pago)) {
-            return false;
-        }
-        Pago other = (Pago) object;
-        if ((this.idPago == null && other.idPago != null) || (this.idPago != null && !this.idPago.equals(other.idPago))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -48,7 +46,7 @@ public class Llamada implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_LLAMADA")
-    private BigDecimal idLlamada;
+    private int idLlamada;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHALLAMADA")
@@ -62,7 +60,7 @@ public class Llamada implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTLLAMADA")
-    private BigInteger cantllamada;
+    private int cantllamada;
     @OneToMany(mappedBy = "llamadaIdLlamada")
     private Collection<PlanServicio> planServicioCollection;
     @JoinColumn(name = "PROFESIONAL_ID_PROFESIONAL", referencedColumnName = "ID_PROFESIONAL")
@@ -72,22 +70,22 @@ public class Llamada implements Serializable {
     public Llamada() {
     }
 
-    public Llamada(BigDecimal idLlamada) {
+    public Llamada(int idLlamada) {
         this.idLlamada = idLlamada;
     }
 
-    public Llamada(BigDecimal idLlamada, Date fechallamada, String descripcionllamada, BigInteger cantllamada) {
-        this.idLlamada = idLlamada;
+    public Llamada( Date fechallamada, String descripcionllamada, int cantllamada) {
+       // this.idLlamada = idLlamada;
         this.fechallamada = fechallamada;
         this.descripcionllamada = descripcionllamada;
         this.cantllamada = cantllamada;
     }
 
-    public BigDecimal getIdLlamada() {
+    public int getIdLlamada() {
         return idLlamada;
     }
 
-    public void setIdLlamada(BigDecimal idLlamada) {
+    public void setIdLlamada(int idLlamada) {
         this.idLlamada = idLlamada;
     }
 
@@ -107,11 +105,11 @@ public class Llamada implements Serializable {
         this.descripcionllamada = descripcionllamada;
     }
 
-    public BigInteger getCantllamada() {
+    public int getCantllamada() {
         return cantllamada;
     }
 
-    public void setCantllamada(BigInteger cantllamada) {
+    public void setCantllamada(int cantllamada) {
         this.cantllamada = cantllamada;
     }
 
@@ -132,25 +130,6 @@ public class Llamada implements Serializable {
         this.profesionalIdProfesional = profesionalIdProfesional;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idLlamada != null ? idLlamada.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Llamada)) {
-            return false;
-        }
-        Llamada other = (Llamada) object;
-        if ((this.idLlamada == null && other.idLlamada != null) || (this.idLlamada != null && !this.idLlamada.equals(other.idLlamada))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

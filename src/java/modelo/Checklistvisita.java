@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -51,7 +49,7 @@ public class Checklistvisita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CHECKLISTVISITA")
-    private BigDecimal idChecklistvisita;
+    private int idChecklistvisita;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHACHECKLISTVISITA")
@@ -72,28 +70,28 @@ public class Checklistvisita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROFESIONAL")
-    private BigInteger idProfesional;
+    private int idProfesional;
 
     public Checklistvisita() {
     }
 
-    public Checklistvisita(BigDecimal idChecklistvisita) {
+    public Checklistvisita(int idChecklistvisita) {
         this.idChecklistvisita = idChecklistvisita;
     }
 
-    public Checklistvisita(BigDecimal idChecklistvisita, Date fechachecklistvisita, String mejora, Character estadochecklist, BigInteger idProfesional) {
-        this.idChecklistvisita = idChecklistvisita;
+    public Checklistvisita( Date fechachecklistvisita, String mejora, Character estadochecklist, int idProfesional) {
+       // this.idChecklistvisita = idChecklistvisita;
         this.fechachecklistvisita = fechachecklistvisita;
         this.mejora = mejora;
         this.estadochecklist = estadochecklist;
         this.idProfesional = idProfesional;
     }
 
-    public BigDecimal getIdChecklistvisita() {
+    public int getIdChecklistvisita() {
         return idChecklistvisita;
     }
 
-    public void setIdChecklistvisita(BigDecimal idChecklistvisita) {
+    public void setIdChecklistvisita(int idChecklistvisita) {
         this.idChecklistvisita = idChecklistvisita;
     }
 
@@ -129,33 +127,14 @@ public class Checklistvisita implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public BigInteger getIdProfesional() {
+    public int getIdProfesional() {
         return idProfesional;
     }
 
-    public void setIdProfesional(BigInteger idProfesional) {
+    public void setIdProfesional(int idProfesional) {
         this.idProfesional = idProfesional;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idChecklistvisita != null ? idChecklistvisita.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Checklistvisita)) {
-            return false;
-        }
-        Checklistvisita other = (Checklistvisita) object;
-        if ((this.idChecklistvisita == null && other.idChecklistvisita != null) || (this.idChecklistvisita != null && !this.idChecklistvisita.equals(other.idChecklistvisita))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

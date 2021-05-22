@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -52,7 +50,7 @@ public class Servicioextra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_EXTRA")
-    private BigDecimal idExtra;
+    private int idExtra;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 200)
@@ -66,7 +64,7 @@ public class Servicioextra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "COSTOEXTRA")
-    private BigInteger costoextra;
+    private int costoextra;
     @JoinColumn(name = "TIPOEXTRA_IDTIPOEXTRA", referencedColumnName = "IDTIPOEXTRA")
     @ManyToOne
     private Tipoextra tipoextraIdtipoextra;
@@ -74,22 +72,22 @@ public class Servicioextra implements Serializable {
     public Servicioextra() {
     }
 
-    public Servicioextra(BigDecimal idExtra) {
+    public Servicioextra(int idExtra) {
         this.idExtra = idExtra;
     }
 
-    public Servicioextra(BigDecimal idExtra, String descripcionextra, Date fechaextra, BigInteger costoextra) {
-        this.idExtra = idExtra;
+    public Servicioextra( String descripcionextra, Date fechaextra, int costoextra) {
+       // this.idExtra = idExtra;
         this.descripcionextra = descripcionextra;
         this.fechaextra = fechaextra;
         this.costoextra = costoextra;
     }
 
-    public BigDecimal getIdExtra() {
+    public int getIdExtra() {
         return idExtra;
     }
 
-    public void setIdExtra(BigDecimal idExtra) {
+    public void setIdExtra(int idExtra) {
         this.idExtra = idExtra;
     }
 
@@ -109,11 +107,11 @@ public class Servicioextra implements Serializable {
         this.fechaextra = fechaextra;
     }
 
-    public BigInteger getCostoextra() {
+    public int getCostoextra() {
         return costoextra;
     }
 
-    public void setCostoextra(BigInteger costoextra) {
+    public void setCostoextra(int costoextra) {
         this.costoextra = costoextra;
     }
 
@@ -123,26 +121,6 @@ public class Servicioextra implements Serializable {
 
     public void setTipoextraIdtipoextra(Tipoextra tipoextraIdtipoextra) {
         this.tipoextraIdtipoextra = tipoextraIdtipoextra;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idExtra != null ? idExtra.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Servicioextra)) {
-            return false;
-        }
-        Servicioextra other = (Servicioextra) object;
-        if ((this.idExtra == null && other.idExtra != null) || (this.idExtra != null && !this.idExtra.equals(other.idExtra))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

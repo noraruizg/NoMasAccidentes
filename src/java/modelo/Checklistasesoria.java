@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -50,7 +49,7 @@ public class Checklistasesoria implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CHECKLISTASESORIA")
-    private BigDecimal idChecklistasesoria;
+    private int idChecklistasesoria;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHACHECKLISTASESORIA")
@@ -77,23 +76,23 @@ public class Checklistasesoria implements Serializable {
     public Checklistasesoria() {
     }
 
-    public Checklistasesoria(BigDecimal idChecklistasesoria) {
+    public Checklistasesoria(int idChecklistasesoria) {
         this.idChecklistasesoria = idChecklistasesoria;
     }
 
-    public Checklistasesoria(BigDecimal idChecklistasesoria, Date fechachecklistasesoria, String causanteasesoria, String mejora, Character estadochecklist) {
-        this.idChecklistasesoria = idChecklistasesoria;
+    public Checklistasesoria( Date fechachecklistasesoria, String causanteasesoria, String mejora, Character estadochecklist) {
+       // this.idChecklistasesoria = idChecklistasesoria;
         this.fechachecklistasesoria = fechachecklistasesoria;
         this.causanteasesoria = causanteasesoria;
         this.mejora = mejora;
         this.estadochecklist = estadochecklist;
     }
 
-    public BigDecimal getIdChecklistasesoria() {
+    public int getIdChecklistasesoria() {
         return idChecklistasesoria;
     }
 
-    public void setIdChecklistasesoria(BigDecimal idChecklistasesoria) {
+    public void setIdChecklistasesoria(int idChecklistasesoria) {
         this.idChecklistasesoria = idChecklistasesoria;
     }
 
@@ -137,25 +136,6 @@ public class Checklistasesoria implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idChecklistasesoria != null ? idChecklistasesoria.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Checklistasesoria)) {
-            return false;
-        }
-        Checklistasesoria other = (Checklistasesoria) object;
-        if ((this.idChecklistasesoria == null && other.idChecklistasesoria != null) || (this.idChecklistasesoria != null && !this.idChecklistasesoria.equals(other.idChecklistasesoria))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

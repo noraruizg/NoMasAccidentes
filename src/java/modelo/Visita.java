@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -46,7 +45,7 @@ public class Visita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_VISITA")
-    private BigDecimal idVisita;
+    private int idVisita;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -68,21 +67,21 @@ public class Visita implements Serializable {
     public Visita() {
     }
 
-    public Visita(BigDecimal idVisita) {
+    public Visita(int idVisita) {
         this.idVisita = idVisita;
     }
 
-    public Visita(BigDecimal idVisita, String tipovisita, Date fechavisita) {
-        this.idVisita = idVisita;
+    public Visita(String tipovisita, Date fechavisita) {
+      //  this.idVisita = idVisita;
         this.tipovisita = tipovisita;
         this.fechavisita = fechavisita;
     }
 
-    public BigDecimal getIdVisita() {
+    public int getIdVisita() {
         return idVisita;
     }
 
-    public void setIdVisita(BigDecimal idVisita) {
+    public void setIdVisita(int idVisita) {
         this.idVisita = idVisita;
     }
 
@@ -128,25 +127,6 @@ public class Visita implements Serializable {
         this.checklistvisitaCollection = checklistvisitaCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idVisita != null ? idVisita.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Visita)) {
-            return false;
-        }
-        Visita other = (Visita) object;
-        if ((this.idVisita == null && other.idVisita != null) || (this.idVisita != null && !this.idVisita.equals(other.idVisita))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

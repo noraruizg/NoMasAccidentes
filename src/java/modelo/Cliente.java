@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -47,7 +45,7 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CLIENTE")
-    private BigDecimal idCliente;
+    private int idCliente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -56,7 +54,7 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "RUBRO")
-    private BigInteger rubro;
+    private int rubro;
     @Size(max = 200)
     @Column(name = "DESCRIPCIONCLIENTE")
     private String descripcioncliente;
@@ -76,22 +74,22 @@ public class Cliente implements Serializable {
     public Cliente() {
     }
 
-    public Cliente(BigDecimal idCliente) {
+    public Cliente(int idCliente) {
         this.idCliente = idCliente;
     }
 
-    public Cliente(BigDecimal idCliente, String nombre, BigInteger rubro, String estado) {
-        this.idCliente = idCliente;
+    public Cliente( String nombre, int rubro, String estado) {
+        //this.idCliente = idCliente;
         this.nombre = nombre;
         this.rubro = rubro;
         this.estado = estado;
     }
 
-    public BigDecimal getIdCliente() {
+    public int getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(BigDecimal idCliente) {
+    public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
     }
 
@@ -103,11 +101,11 @@ public class Cliente implements Serializable {
         this.nombre = nombre;
     }
 
-    public BigInteger getRubro() {
+    public int getRubro() {
         return rubro;
     }
 
-    public void setRubro(BigInteger rubro) {
+    public void setRubro(int rubro) {
         this.rubro = rubro;
     }
 
@@ -153,25 +151,6 @@ public class Cliente implements Serializable {
         this.accidenteCollection = accidenteCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idCliente != null ? idCliente.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Cliente)) {
-            return false;
-        }
-        Cliente other = (Cliente) object;
-        if ((this.idCliente == null && other.idCliente != null) || (this.idCliente != null && !this.idCliente.equals(other.idCliente))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

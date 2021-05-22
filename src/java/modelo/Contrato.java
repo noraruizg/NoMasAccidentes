@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -81,14 +80,14 @@ public class Contrato implements Serializable {
         this.contratoPK = contratoPK;
     }
 
-    public Contrato(ContratoPK contratoPK, Date fechainicio, Date fechatermino, String estado) {
-        this.contratoPK = contratoPK;
+    public Contrato( Date fechainicio, Date fechatermino, String estado) {
+        //this.contratoPK = contratoPK;
         this.fechainicio = fechainicio;
         this.fechatermino = fechatermino;
         this.estado = estado;
     }
 
-    public Contrato(BigInteger idContrato, BigInteger clienteIdCliente) {
+    public Contrato(int idContrato, int clienteIdCliente) {
         this.contratoPK = new ContratoPK(idContrato, clienteIdCliente);
     }
 

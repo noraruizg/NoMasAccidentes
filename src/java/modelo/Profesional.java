@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -46,7 +45,7 @@ public class Profesional implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROFESIONAL")
-    private BigDecimal idProfesional;
+    private int idProfesional;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
@@ -84,11 +83,11 @@ public class Profesional implements Serializable {
     public Profesional() {
     }
 
-    public Profesional(BigDecimal idProfesional) {
+    public Profesional(int idProfesional) {
         this.idProfesional = idProfesional;
     }
 
-    public Profesional(BigDecimal idProfesional, String nombreprofesional, String apaterno, String amaterno, String estado) {
+    public Profesional( String nombreprofesional, String apaterno, String amaterno, String estado) {
         this.idProfesional = idProfesional;
         this.nombreprofesional = nombreprofesional;
         this.apaterno = apaterno;
@@ -96,11 +95,11 @@ public class Profesional implements Serializable {
         this.estado = estado;
     }
 
-    public BigDecimal getIdProfesional() {
+    public int getIdProfesional() {
         return idProfesional;
     }
 
-    public void setIdProfesional(BigDecimal idProfesional) {
+    public void setIdProfesional(int idProfesional) {
         this.idProfesional = idProfesional;
     }
 
@@ -189,25 +188,6 @@ public class Profesional implements Serializable {
         this.asesoriaCollection = asesoriaCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idProfesional != null ? idProfesional.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Profesional)) {
-            return false;
-        }
-        Profesional other = (Profesional) object;
-        if ((this.idProfesional == null && other.idProfesional != null) || (this.idProfesional != null && !this.idProfesional.equals(other.idProfesional))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
