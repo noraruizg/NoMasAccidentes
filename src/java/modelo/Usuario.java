@@ -6,11 +6,15 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -29,10 +33,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")
-    , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
-    , @NamedQuery(name = "Usuario.findByTipo", query = "SELECT u FROM Usuario u WHERE u.tipo = :tipo")
+    , @NamedQuery(name = "Usuario.findByTipousuario", query = "SELECT u FROM Usuario u WHERE u.tipousuario = :tipousuario")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")})
+    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
+    , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -41,62 +45,64 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_USUARIO")
-    private Integer idUsuario;
+    private BigDecimal idUsuario;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "NOMBRE")
-    private String nombre;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "TIPO")
-    private int tipo;
+    @Column(name = "TIPOUSUARIO")
+    private BigInteger tipousuario;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "EMAIL")
     private String email;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "PASSWORD")
     private String password;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "ESTADO")
+    private String estado;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioIdUsuario")
     private Profesional profesional;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarioIdUsuario")
     private Cliente cliente;
+    @JoinColumn(name = "ALERTA_ID_ALERTA", referencedColumnName = "ID_ALERTA")
+    @ManyToOne
+    private Alerta alertaIdAlerta;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario) {
+    public Usuario(BigDecimal idUsuario) {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(String nombre, int tipo, String email, String password) {
-        
-        this.nombre = nombre;
-        this.tipo = tipo;
+    public Usuario(BigDecimal idUsuario, BigInteger tipousuario, String email, String password, String estado) {
+        this.idUsuario = idUsuario;
+        this.tipousuario = tipousuario;
         this.email = email;
         this.password = password;
+        this.estado = estado;
     }
 
-
-    public String getNombre() {
-        return nombre;
+    public BigDecimal getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdUsuario(BigDecimal idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public int getTipo() {
-        return tipo;
+    public BigInteger getTipousuario() {
+        return tipousuario;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setTipousuario(BigInteger tipousuario) {
+        this.tipousuario = tipousuario;
     }
 
     public String getEmail() {
@@ -115,6 +121,14 @@ public class Usuario implements Serializable {
         this.password = password;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     public Profesional getProfesional() {
         return profesional;
     }
@@ -129,6 +143,14 @@ public class Usuario implements Serializable {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public Alerta getAlertaIdAlerta() {
+        return alertaIdAlerta;
+    }
+
+    public void setAlertaIdAlerta(Alerta alertaIdAlerta) {
+        this.alertaIdAlerta = alertaIdAlerta;
     }
 
     @Override

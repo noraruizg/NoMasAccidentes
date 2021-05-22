@@ -6,6 +6,7 @@
 package modelo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -33,10 +34,10 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Profesional.findAll", query = "SELECT p FROM Profesional p")
     , @NamedQuery(name = "Profesional.findByIdProfesional", query = "SELECT p FROM Profesional p WHERE p.idProfesional = :idProfesional")
-    , @NamedQuery(name = "Profesional.findByNombre", query = "SELECT p FROM Profesional p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Profesional.findByCargo", query = "SELECT p FROM Profesional p WHERE p.cargo = :cargo")
+    , @NamedQuery(name = "Profesional.findByNombreprofesional", query = "SELECT p FROM Profesional p WHERE p.nombreprofesional = :nombreprofesional")
     , @NamedQuery(name = "Profesional.findByApaterno", query = "SELECT p FROM Profesional p WHERE p.apaterno = :apaterno")
-    , @NamedQuery(name = "Profesional.findByAmaterno", query = "SELECT p FROM Profesional p WHERE p.amaterno = :amaterno")})
+    , @NamedQuery(name = "Profesional.findByAmaterno", query = "SELECT p FROM Profesional p WHERE p.amaterno = :amaterno")
+    , @NamedQuery(name = "Profesional.findByEstado", query = "SELECT p FROM Profesional p WHERE p.estado = :estado")})
 public class Profesional implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,69 +46,70 @@ public class Profesional implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROFESIONAL")
-    private Integer idProfesional;
+    private BigDecimal idProfesional;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "NOMBRE")
-    private String nombre;
+    @Size(min = 1, max = 100)
+    @Column(name = "NOMBREPROFESIONAL")
+    private String nombreprofesional;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "CARGO")
-    private String cargo;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "APATERNO")
     private String apaterno;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "AMATERNO")
     private String amaterno;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesional")
-    private Collection<Relation13> relation13Collection;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "ESTADO")
+    private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
-    private Collection<Checklist> checklistCollection;
+    private Collection<Capacitacion> capacitacionCollection;
     @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
     @OneToOne(optional = false)
     private Usuario usuarioIdUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
+    private Collection<Contrato> contratoCollection;
+    @OneToMany(mappedBy = "profesionalIdProfesional")
+    private Collection<Llamada> llamadaCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
     private Collection<Visita> visitaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
-    private Collection<Historial> historialCollection;
+    private Collection<Asesoria> asesoriaCollection;
 
     public Profesional() {
     }
 
-    public Profesional(int idProfesional) {
+    public Profesional(BigDecimal idProfesional) {
         this.idProfesional = idProfesional;
     }
 
-    public Profesional(String nombre, String cargo, String apaterno, String amaterno) {
-        
-        this.nombre = nombre;
-        this.cargo = cargo;
+    public Profesional(BigDecimal idProfesional, String nombreprofesional, String apaterno, String amaterno, String estado) {
+        this.idProfesional = idProfesional;
+        this.nombreprofesional = nombreprofesional;
         this.apaterno = apaterno;
         this.amaterno = amaterno;
+        this.estado = estado;
     }
 
-
-    public String getNombre() {
-        return nombre;
+    public BigDecimal getIdProfesional() {
+        return idProfesional;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setIdProfesional(BigDecimal idProfesional) {
+        this.idProfesional = idProfesional;
     }
 
-    public String getCargo() {
-        return cargo;
+    public String getNombreprofesional() {
+        return nombreprofesional;
     }
 
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
+    public void setNombreprofesional(String nombreprofesional) {
+        this.nombreprofesional = nombreprofesional;
     }
 
     public String getApaterno() {
@@ -126,22 +128,21 @@ public class Profesional implements Serializable {
         this.amaterno = amaterno;
     }
 
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
     @XmlTransient
-    public Collection<Relation13> getRelation13Collection() {
-        return relation13Collection;
+    public Collection<Capacitacion> getCapacitacionCollection() {
+        return capacitacionCollection;
     }
 
-    public void setRelation13Collection(Collection<Relation13> relation13Collection) {
-        this.relation13Collection = relation13Collection;
-    }
-
-    @XmlTransient
-    public Collection<Checklist> getChecklistCollection() {
-        return checklistCollection;
-    }
-
-    public void setChecklistCollection(Collection<Checklist> checklistCollection) {
-        this.checklistCollection = checklistCollection;
+    public void setCapacitacionCollection(Collection<Capacitacion> capacitacionCollection) {
+        this.capacitacionCollection = capacitacionCollection;
     }
 
     public Usuario getUsuarioIdUsuario() {
@@ -150,6 +151,24 @@ public class Profesional implements Serializable {
 
     public void setUsuarioIdUsuario(Usuario usuarioIdUsuario) {
         this.usuarioIdUsuario = usuarioIdUsuario;
+    }
+
+    @XmlTransient
+    public Collection<Contrato> getContratoCollection() {
+        return contratoCollection;
+    }
+
+    public void setContratoCollection(Collection<Contrato> contratoCollection) {
+        this.contratoCollection = contratoCollection;
+    }
+
+    @XmlTransient
+    public Collection<Llamada> getLlamadaCollection() {
+        return llamadaCollection;
+    }
+
+    public void setLlamadaCollection(Collection<Llamada> llamadaCollection) {
+        this.llamadaCollection = llamadaCollection;
     }
 
     @XmlTransient
@@ -162,12 +181,12 @@ public class Profesional implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Historial> getHistorialCollection() {
-        return historialCollection;
+    public Collection<Asesoria> getAsesoriaCollection() {
+        return asesoriaCollection;
     }
 
-    public void setHistorialCollection(Collection<Historial> historialCollection) {
-        this.historialCollection = historialCollection;
+    public void setAsesoriaCollection(Collection<Asesoria> asesoriaCollection) {
+        this.asesoriaCollection = asesoriaCollection;
     }
 
     @Override
