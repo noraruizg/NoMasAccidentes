@@ -72,11 +72,10 @@
     </style>
     <body>
         <ul>
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato" class="active">Contratos</a></li>
-            <li><a href="">Reportes</a></li>
+            <li><a href="listarContrato"class="active">Contratos</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="">Checklist</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
@@ -90,8 +89,8 @@
                 <label>Fecha de Vencimiento</label>
                 <input type="date" name="fVencimiento" required>
                 <br><br>
-                <label>Profesional</label>
-                <select name="id_Profesional">
+                <label>Cliente</label>
+                <select name="id_cliente">
                     <option value="sinAsignar">Sin Asignar</option>
                 </select>
                 <label>Plan de Servicio</label>
