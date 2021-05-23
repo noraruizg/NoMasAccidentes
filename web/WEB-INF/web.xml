@@ -150,6 +150,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>menu</welcome-file>
+        <welcome-file>login</welcome-file>
     </welcome-file-list>
 </web-app>
