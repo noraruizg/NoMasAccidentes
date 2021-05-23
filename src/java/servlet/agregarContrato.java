@@ -1,111 +1,89 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
+import ConexionconBD.ConexionBD;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.CallableStatement;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.Contrato;
-import servicio.Cont;
 
-/**
- *
- * @author norar
- */
 @WebServlet(name = "agregarContrato", urlPatterns = {"/agregarContrato"})
 public class agregarContrato extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet agregarContrato</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet agregarContrato at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
         request.getRequestDispatcher("WEB-INF/contrato/agregarContrato.jsp").forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        HttpSession s = request.getSession();
+        HttpSession sesion = request.getSession();
         
-        Cont c = (Cont)s.getAttribute("cont");
-        if(c==null)
-            request.getRequestDispatcher("WEB-INF/login.jsp").forward(request, response);
-        else{
-            //Date fInicio = request.getParameter("nombre");
-            //Date tipo = request.getParameter("tipo");
-            //String idCliente = request.getParameter("idCliente");
-            
-            //Contrato cn = new Contrato(
-            //        nombre,
-            //        Integer.parseInt(idCliente),
-            
-           // );
-           // c.agregarContrato(cn);
-            request.setAttribute("mensaje","Contrato Agregado Exitosamente");
-            request.getRequestDispatcher("WEB-INF/contrato/agregarContrato.jsp").forward(request, response);
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        
+        String fechaIn = request.getParameter("fInicio");
+        String fechaTe = request.getParameter("fVencimiento");
+        
+        java.util.Date fechaIni = null;
+        try {
+            fechaIni = formatoFecha.parse(fechaIn);
+        } catch (ParseException ex) {
+            Logger.getLogger(agregarContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        java.sql.Date fechaInicio = new java.sql.Date(fechaIni.getTime());       
+        
+        java.util.Date fechaTer = null;
+        try {
+            fechaTer = formatoFecha.parse(fechaTe);
+        } catch (ParseException ex) {
+            Logger.getLogger(agregarContrato.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        java.sql.Date fechaTermino = new java.sql.Date(fechaTer.getTime());
+        
+        int idCliente = Integer.parseInt(request.getParameter("id_cliente"));
+        int planServicio = Integer.parseInt(request.getParameter("id_PlanServicio"));
+        int IdProf = Integer.parseInt(sesion.getAttribute("idProfesional").toString());
+        
+        ConexionBD conec = new ConexionBD();
+        Connection conn = conec.conectar(); 
+        
+        try{  
+            CallableStatement cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?,?)}");
+            cst.setDate(1, fechaInicio);
+            cst.setDate(2, fechaTermino);
+            cst.setString(3, "Activo");
+            cst.setInt(4, idCliente); 
+            cst.setInt(5, IdProf);
+            cst.setInt(6, planServicio); 
+            cst.executeUpdate(); 
+        }catch(SQLException ex){
+            System.out.println("Error de SQL" + ex);
+        }
+        response.sendRedirect("listarContrato");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
