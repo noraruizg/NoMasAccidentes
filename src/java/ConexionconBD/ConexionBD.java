@@ -54,25 +54,24 @@ public class ConexionBD {
         return tipoUser;
     }
     
-    public int obtenerIdProfesional(String email, String pass){
+    public String obtenerIdProfesional(String email, String pass){
         PreparedStatement pst;
         ResultSet rs;
-        int idProfesional = 0;
-        String sql = "SELECT p.ID_PROFESIONAL FROM PROFESIONAL p INNER JOIN USUARIO us ON us.ID_USUARIO = p.USUARIO_ID_USUARIO WHERE us.email = '"+email+"' AND us.password = '"+pass+"'";
-               
+        String rutProfesional = "";
+        String sql = "SELECT p.RUT_PROFESIONAL FROM PROFESIONAL p INNER JOIN USUARIO us ON us.ID_USUARIO = p.USUARIO_ID_USUARIO WHERE us.email = '"+email+"' AND us.password = '"+pass+"'";
+
         try {
             ConexionBD conec = new ConexionBD();
             Connection conn = conec.conectar();
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            
             while(rs.next()){
-                idProfesional = rs.getInt(1);
+                rutProfesional = rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return idProfesional;
+        return rutProfesional;
     }
     
 }
