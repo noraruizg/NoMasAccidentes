@@ -113,7 +113,7 @@
             <tbody>
                 <%  
                     String idProfes = sesion.getAttribute("idProfesional").toString();
-                    String queryContratos = "SELECT co.FECHAINICIO, co.FECHATERMINO, NOMBRE FROM CONTRATO co INNER JOIN CLIENTE cli ON co.cliente_id_cliente = cli.id_cliente INNER JOIN PROFESIONAL pro ON co.profesional_id_profesional = pro.id_profesional WHERE pro.id_profesional = " + idProfes;
+                    String queryContratos = "SELECT co.FECHAINICIO, co.FECHATERMINO, NOMBRE FROM CONTRATO co INNER JOIN CLIENTE cli ON co.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON co.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
                     ResultSet rsContrato = st.executeQuery(queryContratos);                
                     while(rsContrato.next()){
                     java.sql.Date fechaIni = rsContrato.getDate("FECHAINICIO");
