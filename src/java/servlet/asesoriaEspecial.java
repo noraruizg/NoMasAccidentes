@@ -50,8 +50,8 @@ public class asesoriaEspecial extends HttpServlet {
         
         java.sql.Date fechaAsesoria = new java.sql.Date(fechaAs.getTime()); 
         
-        int idCliente = Integer.parseInt(request.getParameter("idCliente"));
-        int IdProf = Integer.parseInt(sesion.getAttribute("idProfesional").toString());
+        String idCliente = request.getParameter("idCliente");
+        String IdProf = sesion.getAttribute("idProfesional").toString();
         String tipoAsesoria = request.getParameter("tAsesoria");
         
         ConexionBD conec = new ConexionBD();
@@ -61,8 +61,8 @@ public class asesoriaEspecial extends HttpServlet {
             CallableStatement cst = conn.prepareCall("{call RegistrarAsesoria(?,?,?,?)}");
             cst.setDate(1, fechaAsesoria);
             cst.setString(2, tipoAsesoria);
-            cst.setInt(3, IdProf);
-            cst.setInt(4, idCliente);
+            cst.setString(3, IdProf);
+            cst.setString(4, idCliente);
             cst.executeUpdate();           
         } catch (SQLException ex) {
             Logger.getLogger(asesoriaEspecial.class.getName()).log(Level.SEVERE, null, ex);
