@@ -59,9 +59,9 @@ public class agregarContrato extends HttpServlet {
         
         java.sql.Date fechaTermino = new java.sql.Date(fechaTer.getTime());
         
-        int idCliente = Integer.parseInt(request.getParameter("id_cliente"));
+        String idCliente = request.getParameter("id_cliente");
         int planServicio = Integer.parseInt(request.getParameter("id_PlanServicio"));
-        int IdProf = Integer.parseInt(sesion.getAttribute("idProfesional").toString());
+        String IdProf = sesion.getAttribute("idProfesional").toString();
         
         ConexionBD conec = new ConexionBD();
         Connection conn = conec.conectar(); 
@@ -70,9 +70,9 @@ public class agregarContrato extends HttpServlet {
             CallableStatement cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?,?)}");
             cst.setDate(1, fechaInicio);
             cst.setDate(2, fechaTermino);
-            cst.setString(3, "Activo");
-            cst.setInt(4, idCliente); 
-            cst.setInt(5, IdProf);
+            cst.setString(3, "T");
+            cst.setString(4, idCliente); 
+            cst.setString(5, IdProf);
             cst.setInt(6, planServicio); 
             cst.executeUpdate(); 
         }catch(SQLException ex){
