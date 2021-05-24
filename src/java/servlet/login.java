@@ -43,7 +43,7 @@ public class login extends HttpServlet {
         if(tipoUser == 2){
             sesion.setAttribute("email", email);
             sesion.setAttribute("Tipousuario", tipoUser);
-            int idProfesional = conec.obtenerIdProfesional(email, pass);
+            String idProfesional = conec.obtenerIdProfesional(email, pass);
             sesion.setAttribute("idProfesional", idProfesional);
             response.sendRedirect("profesional");
         }else if(tipoUser == 3){
