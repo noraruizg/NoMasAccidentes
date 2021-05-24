@@ -97,12 +97,12 @@
                     <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
                     <%    
                       //Mostrar Profesionales en ComboBox  
-                      String queryCliente = "SELECT ID_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
+                      String queryCliente = "SELECT RUT_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
                       ResultSet rsCliente = st.executeQuery(queryCliente);
                       
                       while(rsCliente.next()){
                     %>
-                        <option value="<%=rsCliente.getInt("ID_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
+                        <option value="<%=rsCliente.getString("RUT_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
                     <%
                       } 
                     %>
