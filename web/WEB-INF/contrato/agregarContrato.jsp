@@ -91,7 +91,7 @@
             <li><a href="listarContrato"class="active">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
-
+            <li><a href="">Checklist</a></li>
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         <h3>Agregar Contrato</h3>
@@ -109,12 +109,12 @@
                     <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
                     <%    
                       //Mostrar Profesionales en ComboBox  
-                      String queryCliente = "SELECT ID_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
+                      String queryCliente = "SELECT RUT_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
                       ResultSet rsCliente = st.executeQuery(queryCliente);
                       
                       while(rsCliente.next()){
                     %>
-                        <option value="<%=rsCliente.getInt("ID_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
+                        <option value="<%=rsCliente.getString("RUT_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
                     <%
                       } 
                     %>
