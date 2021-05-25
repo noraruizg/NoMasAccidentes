@@ -79,7 +79,8 @@
             <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="asesoriaEspecial"class="active">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            <li><a href="servicioExtra">Servicios Extra</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>

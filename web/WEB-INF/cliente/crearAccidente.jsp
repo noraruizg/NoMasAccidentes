@@ -81,14 +81,11 @@
         <div>
             <form action="crearAccidente" method="POST">
                 <label>Descripcion Accidente</label>
-                <select name="tipoPago">
-                    <option value="sinAsignar">Sin Asignar</option>
-                    <option value="debito">Debito</option>
-                    <option value="debito">Crebito</option>
-                </select>
+                <input type="text" name="descripcionAccidente"
+                <br><br>
                 
                 <label>Fecha</label>
-                <input type="text" name="fecha" disabled>
+                <input type="text" name="fechaAccidente" disabled>
                 <br><br>   
 
                 <input type="submit" value="ReportarAccidente">

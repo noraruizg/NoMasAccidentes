@@ -70,13 +70,12 @@
     </style>
     <body>
         <ul>
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato" class="active">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
-
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
+            <li><a href="listarContrato">Contratos</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="listarVisitas"class="active">Visitas</a></li>
+            <li><a href="servicioExtra">Servicios Extra</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
         <h3>Planificar Visita</h3>
         <div>

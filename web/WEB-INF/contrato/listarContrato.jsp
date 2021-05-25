@@ -94,7 +94,8 @@
             <li><a href="listarContrato"class="active">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            <li><a href="servicioExtra">Servicios Extra</a></li>
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         <h2>Listado de Contratos</h2>

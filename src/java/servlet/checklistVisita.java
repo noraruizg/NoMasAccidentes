@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author norar
  */
-public class asistentes extends HttpServlet {
+public class checklistVisita extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,10 +35,10 @@ public class asistentes extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet asistentes</title>");            
+            out.println("<title>Servlet checklistVisita</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet asistentes at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet checklistVisita at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,7 +57,7 @@ public class asistentes extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        request.getRequestDispatcher("WEB-INF/capacitacion/asistentes.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/visitas/checklistVisita.jsp").forward(request, response);
     }
 
     /**

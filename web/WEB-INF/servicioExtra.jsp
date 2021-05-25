@@ -6,15 +6,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html>
-    
     <%
         Class.forName("oracle.jdbc.OracleDriver").newInstance();
         Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "sebafzen", "duoc");
         Statement st = con.createStatement();
     %>
-    
     <style>
         body{
                 background-color: #EBFBE8;
@@ -88,61 +85,52 @@
             }
         %>
         <ul>
-            <li><a href="listarContrato"class="active">Contratos</a></li>
+            <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
-            <li><a href="servicioExtra">Servicios Extra</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            <li><a href="servicioExtra"class="active">Servicios Extra</a></li>
             <li><a href="">Checklist</a></li>
-            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
+
+            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
-        <h3>Agregar Contrato</h3>
-
+        <h3>Solicitar Servicio Extra</h3>
         <div>
-            <form action="agregarContrato" method="POST">
-                <label>Fecha de Inicio</label>
-                <input type="date" name="fInicio" required>
+            <form action="servicioExtra" method="POST">
+                <label>Tipo de Servicio</label>
+                <select name="idTipoExtra">
+                    <option value="sinAsignar">Sin Asignar</option>
+                    <%    
+                      //Mostrar Tipo Extra en ComboBox  
+                      String queryTipoExtra = "SELECT idTipoExtra, descripcion FROM TIPOEXTRA ORDER BY descripciion";
+                      ResultSet rsTipoExtra = st.executeQuery(queryTipoExtra);
+                      
+                      while(rsTipoExtra.next()){
+                    %>
+                        <option value="<%=rsTipoExtra.getString("idTipoExtra")%>"><%=rsTipoExtra.getString("descripcion")%></option>
+                    <%
+                      } 
+                    %>
+                </select>
                 
-                <label>Fecha de Vencimiento</label>
-                <input type="date" name="fVencimiento" required>
+                <label>Descripcion Servicio Extra</label>
+                <input type="text" name="descripcionExtra" required>
                 <br><br>
-                <label>Cliente</label>
-                <select name="id_cliente">
-                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
-                    <%    
-                      //Mostrar Profesionales en ComboBox  
-                      String queryCliente = "SELECT RUT_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
-                      ResultSet rsCliente = st.executeQuery(queryCliente);
-                      
-                      while(rsCliente.next()){
-                    %>
-                        <option value="<%=rsCliente.getString("RUT_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
-                    <%
-                      } 
-                    %>
-                </select>
-                <label>Plan de Servicio</label>
-                <select name="id_PlanServicio">
-                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
-                    <%    
-                      //Mostrar Planes de Servicio en ComboBox  
-                      String queryServicio = "SELECT ID_PLAN_SERVICIO, NOMBREPLAN FROM PLAN_SERVICIO ORDER BY NOMBREPLAN";
-                      ResultSet rsServicio = st.executeQuery(queryServicio);
-                      
-                      while(rsServicio.next()){
-                    %>
-                        <option value="<%=rsServicio.getInt("ID_PLAN_SERVICIO")%>"><%=rsServicio.getString("NOMBREPLAN")%></option>
-                    <%
-                      } 
-                    %> 
-                </select>
+                
+                <label>Fecha Servicio Extra</label>
+                <input type="date" name="fechaExtra" required>
+                <br><br>
+                
+                <label>Costo Servicio Extra</label>
+                <input type="text" name="costoExtra" required>
+                <br><br>
 
-                <input type="submit" value="Crear Contrato">
+                <input type="submit" value="Crear Servicio Extra">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
             </c:forEach>
         </div>
-
     </body>
 </html>

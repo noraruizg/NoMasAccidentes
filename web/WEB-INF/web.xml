@@ -18,7 +18,7 @@
     </servlet>
     <servlet>
         <servlet-name>asesoriaExtra</servlet-name>
-        <servlet-class>servlet.asesoriaExtra</servlet-class>
+        <servlet-class>servlet.servicioExtra</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>asistentes</servlet-name>
@@ -71,6 +71,14 @@
     <servlet>
         <servlet-name>registrarVisita</servlet-name>
         <servlet-class>servlet.registrarVisita</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checklistVisita</servlet-name>
+        <servlet-class>servlet.checklistVisita</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>checklistAsesoria</servlet-name>
+        <servlet-class>servlet.checklistAsesoria</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>login</servlet-name>
@@ -143,6 +151,14 @@
     <servlet-mapping>
         <servlet-name>registrarVisita</servlet-name>
         <url-pattern>/registrarVisita</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checklistVisita</servlet-name>
+        <url-pattern>/checklistVisita</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>checklistAsesoria</servlet-name>
+        <url-pattern>/checklistAsesoria</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

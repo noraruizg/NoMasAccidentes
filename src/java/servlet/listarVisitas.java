@@ -56,7 +56,8 @@ public class listarVisitas extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        request.getRequestDispatcher("WEB-INF/visitas/listarVisitas.jsp").forward(request, response);
     }
 
     /**

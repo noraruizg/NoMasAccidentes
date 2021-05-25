@@ -70,9 +70,11 @@
     </style>
     <body>
         <ul>
+            <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion"class="active">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            <li><a href="servicioExtra">Servicios Extra</a></li>
             <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
         <h3>Planificar Capacitación</h3>

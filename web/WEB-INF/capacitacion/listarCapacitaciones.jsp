@@ -83,6 +83,7 @@
             <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion"class="active">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="servicioExtra">Servicios Extra</a></li>
             <li><a href="">Checklist</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
@@ -104,8 +105,6 @@
                 <th>Descripcion</th>
                 <th>Cant.Asistentes</th>
                 <th>Opciones</th>
-
-
             </tr>
             </thead>
             <tbody>
