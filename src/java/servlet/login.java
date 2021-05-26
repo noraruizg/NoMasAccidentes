@@ -49,6 +49,8 @@ public class login extends HttpServlet {
         }else if(tipoUser == 3){
             sesion.setAttribute("email", email);
             sesion.setAttribute("Tipousuario", tipoUser);
+            String idCliente = conec.obtenerIdCliente(email, pass);
+            sesion.setAttribute("idCliente", idCliente);
             response.sendRedirect("cliente");
         }
         if(request.getParameter("cerrar") != null){
