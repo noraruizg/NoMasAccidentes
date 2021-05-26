@@ -45,10 +45,7 @@
     </head>
     <body>
         <ul>
-            <li><a href="generarPago">Pagos</a></li>
-            <li><a href="crearAccidente">Accidentes</a></li>
-            <li><a href="asesoriaExtra" >Asesorias</a></li>
-
+            <li><a href="crearAccidente">Reportar Accidentes</a></li>
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         
