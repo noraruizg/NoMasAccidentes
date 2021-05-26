@@ -91,7 +91,7 @@
         <ul>
             <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
-            <li><a href="asesoriaEspecial"class="active">Asesorias</a></li>
+            <li><a href="listarAsesoria"class="active">Asesorias</a></li>
             <li><a href="listarVisitas">Visitas</a></li>
             <li><a href="servicioExtra">Servicios Extra</a></li>
 
@@ -112,17 +112,19 @@
             <tbody>
                 <%  
                     String idProfes = sesion.getAttribute("idProfesional").toString();
-                    String queryContratos = "SELECT ase.FECHAASESORIA, ase.TIPOASESORIA FROM ASESORIA ase INNER JOIN CLIENTE cli ON ase.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON ase.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
-                    ResultSet rsContrato = st.executeQuery(queryContratos);                
-                    while(rsContrato.next()){
-                    java.sql.Date fechaAse = rsContrato.getDate("FECHAASESORIA");
+                    String queryAsesorias = "SELECT ase.ID_ASESORIA, ase.FECHAASESORIA, ase.TIPOASESORIA FROM ASESORIA ase INNER JOIN CLIENTE cli ON ase.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON ase.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
+                    ResultSet rsAsesoria = st.executeQuery(queryAsesorias);                
+                    while(rsAsesoria.next()){
+                    java.sql.Date fechaAse = rsAsesoria.getDate("FECHAASESORIA");
                     DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
                     String fechaAs = dateFormat.format(fechaAse);
                 %>
                 <tr>
-                    <td><%= fechaAs%></td>
-                    <td><%= rsContrato.getString("TIPOASESORIA")%></td>
-                    <td></td>
+                    <th><%= fechaAs%></th>
+                    <th><%= rsAsesoria.getString("TIPOASESORIA")%></th>
+                    <th>
+                        <a href="checklistAsesoria?idAsesoriaSeleccionada=<%=rsAsesoria.getInt("ID_ASESORIA")%>">Ver CheckList</a>
+                    </th>
                 </tr>
                 <%
                     } 
