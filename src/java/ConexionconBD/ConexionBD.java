@@ -74,4 +74,24 @@ public class ConexionBD {
         return rutProfesional;
     }
     
+    public String obtenerIdCliente(String email, String pass){
+        PreparedStatement pst;
+        ResultSet rs;
+        String rutCliente = "";
+        String sql = "SELECT p.RUT_CLIENTE FROM CLIENTE c INNER JOIN USUARIO us ON us.ID_USUARIO = c.USUARIO_ID_USUARIO WHERE us.email = '"+email+"' AND us.password = '"+pass+"'";
+
+        try {
+            ConexionBD conec = new ConexionBD();
+            Connection conn = conec.conectar();
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                rutCliente = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rutCliente;
+    }
+    
 }
