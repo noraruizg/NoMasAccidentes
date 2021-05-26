@@ -78,7 +78,7 @@ public class ConexionBD {
         PreparedStatement pst;
         ResultSet rs;
         String rutCliente = "";
-        String sql = "SELECT p.RUT_CLIENTE FROM CLIENTE c INNER JOIN USUARIO us ON us.ID_USUARIO = c.USUARIO_ID_USUARIO WHERE us.email = '"+email+"' AND us.password = '"+pass+"'";
+        String sql = "SELECT c.RUT_CLIENTE FROM CLIENTE c INNER JOIN USUARIO us ON us.ID_USUARIO = c.USUARIO_ID_USUARIO WHERE us.email = '"+email+"' AND us.password = '"+pass+"'";
 
         try {
             ConexionBD conec = new ConexionBD();
