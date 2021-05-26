@@ -106,7 +106,9 @@
         <h3>Checklist Asesoria</h3>
         <div>
             <form action="checklistAsesoria" method="POST">
-                <label>Fecha Checlist Asesoria</label>
+                <input type="hidden" name="idAsesoria" value="<%=request.getParameter("idAsesoriaSeleccionada")%>">
+                
+                <label>Fecha Checklist Asesoria</label>
                 <input type="date" name="fechaChecklistAsesoria" required>
                 <br><br>
                 
@@ -115,34 +117,14 @@
                 <br><br>
                 
                 <label>Mejoras</label>
-                <input type="text" name="mejora" required>
-                <br><br>
-                
-                <label>Estado Checklist</label>
-                <input type="text" name="estadoChecklist" required>
+                <input type="text" name="mejoraCheckListAsesoria" required>
                 <br><br>
                 
                 <label>Fecha Modificacion</label>
-                <input type="date" name="fechaModificacion" required>
+                <input type="date" readonly="true" name="fechaModificacion" required>
                 <br><br>
                 
-                <label>Asesoria</label>
-                <select name="id_asesoria">
-                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
-                    <%    
-                      //Mostrar Asesorias en ComboBox  
-                      String queryAsesoria = "SELECT id_asesoria, tipoAsesoria, Cliente_rut_cliente FROM asesoria ORDER BY tipoAsesoria";
-                      ResultSet rsAsesoria = st.executeQuery(queryAsesoria);
-                      
-                      while(rsAsesoria.next()){
-                    %>
-                        <option value="<%=rsAsesoria.getString("id_asesoria")%>"><%=rsAsesoria.getString("tipoAsesoria")%></option>
-                    <%
-                      } 
-                    %>
-                </select>
-                
-              <input type="submit" value="Crear Checklist Asesoria">
+              <input type="submit" value="Ingresar Checklist">
             </form>
             <h3>${mensaje}</h3>
             <c:forEach items="${mensajes}" var="mensaje">
