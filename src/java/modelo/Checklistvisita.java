@@ -6,13 +6,13 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -36,9 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Checklistvisita.findByMejora", query = "SELECT c FROM Checklistvisita c WHERE c.mejora = :mejora")
     , @NamedQuery(name = "Checklistvisita.findByEstadochecklist", query = "SELECT c FROM Checklistvisita c WHERE c.estadochecklist = :estadochecklist")
     , @NamedQuery(name = "Checklistvisita.findByFechamodificacion", query = "SELECT c FROM Checklistvisita c WHERE c.fechamodificacion = :fechamodificacion")
-    , @NamedQuery(name = "Checklistvisita.findByVisitaIdVisita", query = "SELECT c FROM Checklistvisita c WHERE c.visitaIdVisita = :visitaIdVisita")
     , @NamedQuery(name = "Checklistvisita.findByIdProfesional", query = "SELECT c FROM Checklistvisita c WHERE c.idProfesional = :idProfesional")})
 public class Checklistvisita implements Serializable {
+
+    @JoinColumn(name = "VISITA_ID_VISITA", referencedColumnName = "ID_VISITA")
+    @ManyToOne
+    private Visita visitaIdVisita;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -46,7 +49,7 @@ public class Checklistvisita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CHECKLISTVISITA")
-    private BigDecimal idChecklistvisita;
+    private int idChecklistvisita;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHACHECKLISTVISITA")
@@ -64,33 +67,31 @@ public class Checklistvisita implements Serializable {
     @Column(name = "FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    @Column(name = "VISITA_ID_VISITA")
-    private BigInteger visitaIdVisita;
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PROFESIONAL")
-    private BigInteger idProfesional;
+    private int idProfesional;
 
     public Checklistvisita() {
     }
 
-    public Checklistvisita(BigDecimal idChecklistvisita) {
+    public Checklistvisita(int idChecklistvisita) {
         this.idChecklistvisita = idChecklistvisita;
     }
 
-    public Checklistvisita(BigDecimal idChecklistvisita, Date fechachecklistvisita, String mejora, Character estadochecklist, BigInteger idProfesional) {
-        this.idChecklistvisita = idChecklistvisita;
+    public Checklistvisita( Date fechachecklistvisita, String mejora, Character estadochecklist, int idProfesional) {
+       // this.idChecklistvisita = idChecklistvisita;
         this.fechachecklistvisita = fechachecklistvisita;
         this.mejora = mejora;
         this.estadochecklist = estadochecklist;
         this.idProfesional = idProfesional;
     }
 
-    public BigDecimal getIdChecklistvisita() {
+    public int getIdChecklistvisita() {
         return idChecklistvisita;
     }
 
-    public void setIdChecklistvisita(BigDecimal idChecklistvisita) {
+    public void setIdChecklistvisita(int idChecklistvisita) {
         this.idChecklistvisita = idChecklistvisita;
     }
 
@@ -126,45 +127,26 @@ public class Checklistvisita implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
-    public BigInteger getVisitaIdVisita() {
-        return visitaIdVisita;
-    }
-
-    public void setVisitaIdVisita(BigInteger visitaIdVisita) {
-        this.visitaIdVisita = visitaIdVisita;
-    }
-
-    public BigInteger getIdProfesional() {
+    public int getIdProfesional() {
         return idProfesional;
     }
 
-    public void setIdProfesional(BigInteger idProfesional) {
+    public void setIdProfesional(int idProfesional) {
         this.idProfesional = idProfesional;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idChecklistvisita != null ? idChecklistvisita.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Checklistvisita)) {
-            return false;
-        }
-        Checklistvisita other = (Checklistvisita) object;
-        if ((this.idChecklistvisita == null && other.idChecklistvisita != null) || (this.idChecklistvisita != null && !this.idChecklistvisita.equals(other.idChecklistvisita))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {
         return "modelo.Checklistvisita[ idChecklistvisita=" + idChecklistvisita + " ]";
+    }
+
+    public Visita getVisitaIdVisita() {
+        return visitaIdVisita;
+    }
+
+    public void setVisitaIdVisita(Visita visitaIdVisita) {
+        this.visitaIdVisita = visitaIdVisita;
     }
     
 }

@@ -6,7 +6,7 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,12 +16,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -43,7 +45,7 @@ public class Visita implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_VISITA")
-    private BigDecimal idVisita;
+    private int idVisita;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
@@ -54,28 +56,32 @@ public class Visita implements Serializable {
     @Column(name = "FECHAVISITA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechavisita;
+    @OneToMany(mappedBy = "visitaIdVisita")
+    private Collection<PlanServicio> planServicioCollection;
     @JoinColumn(name = "PROFESIONAL_ID_PROFESIONAL", referencedColumnName = "ID_PROFESIONAL")
     @ManyToOne(optional = false)
     private Profesional profesionalIdProfesional;
+    @OneToMany(mappedBy = "visitaIdVisita")
+    private Collection<Checklistvisita> checklistvisitaCollection;
 
     public Visita() {
     }
 
-    public Visita(BigDecimal idVisita) {
+    public Visita(int idVisita) {
         this.idVisita = idVisita;
     }
 
-    public Visita(BigDecimal idVisita, String tipovisita, Date fechavisita) {
-        this.idVisita = idVisita;
+    public Visita(String tipovisita, Date fechavisita) {
+      //  this.idVisita = idVisita;
         this.tipovisita = tipovisita;
         this.fechavisita = fechavisita;
     }
 
-    public BigDecimal getIdVisita() {
+    public int getIdVisita() {
         return idVisita;
     }
 
-    public void setIdVisita(BigDecimal idVisita) {
+    public void setIdVisita(int idVisita) {
         this.idVisita = idVisita;
     }
 
@@ -95,6 +101,15 @@ public class Visita implements Serializable {
         this.fechavisita = fechavisita;
     }
 
+    @XmlTransient
+    public Collection<PlanServicio> getPlanServicioCollection() {
+        return planServicioCollection;
+    }
+
+    public void setPlanServicioCollection(Collection<PlanServicio> planServicioCollection) {
+        this.planServicioCollection = planServicioCollection;
+    }
+
     public Profesional getProfesionalIdProfesional() {
         return profesionalIdProfesional;
     }
@@ -103,25 +118,15 @@ public class Visita implements Serializable {
         this.profesionalIdProfesional = profesionalIdProfesional;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idVisita != null ? idVisita.hashCode() : 0);
-        return hash;
+    @XmlTransient
+    public Collection<Checklistvisita> getChecklistvisitaCollection() {
+        return checklistvisitaCollection;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Visita)) {
-            return false;
-        }
-        Visita other = (Visita) object;
-        if ((this.idVisita == null && other.idVisita != null) || (this.idVisita != null && !this.idVisita.equals(other.idVisita))) {
-            return false;
-        }
-        return true;
+    public void setChecklistvisitaCollection(Collection<Checklistvisita> checklistvisitaCollection) {
+        this.checklistvisitaCollection = checklistvisitaCollection;
     }
+
 
     @Override
     public String toString() {

@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,7 +39,7 @@ public class Tipoextra implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "IDTIPOEXTRA")
-    private BigDecimal idtipoextra;
+    private int idtipoextra;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -52,20 +51,20 @@ public class Tipoextra implements Serializable {
     public Tipoextra() {
     }
 
-    public Tipoextra(BigDecimal idtipoextra) {
+    public Tipoextra(int idtipoextra) {
         this.idtipoextra = idtipoextra;
     }
 
-    public Tipoextra(BigDecimal idtipoextra, String descripcion) {
-        this.idtipoextra = idtipoextra;
+    public Tipoextra(String descripcion) {
+        //this.idtipoextra = idtipoextra;
         this.descripcion = descripcion;
     }
 
-    public BigDecimal getIdtipoextra() {
+    public int getIdtipoextra() {
         return idtipoextra;
     }
 
-    public void setIdtipoextra(BigDecimal idtipoextra) {
+    public void setIdtipoextra(int idtipoextra) {
         this.idtipoextra = idtipoextra;
     }
 
@@ -86,25 +85,6 @@ public class Tipoextra implements Serializable {
         this.servicioextraCollection = servicioextraCollection;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idtipoextra != null ? idtipoextra.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tipoextra)) {
-            return false;
-        }
-        Tipoextra other = (Tipoextra) object;
-        if ((this.idtipoextra == null && other.idtipoextra != null) || (this.idtipoextra != null && !this.idtipoextra.equals(other.idtipoextra))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

@@ -6,17 +6,17 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Profesional.findByNombreprofesional", query = "SELECT p FROM Profesional p WHERE p.nombreprofesional = :nombreprofesional")
     , @NamedQuery(name = "Profesional.findByApaterno", query = "SELECT p FROM Profesional p WHERE p.apaterno = :apaterno")
     , @NamedQuery(name = "Profesional.findByAmaterno", query = "SELECT p FROM Profesional p WHERE p.amaterno = :amaterno")
-    , @NamedQuery(name = "Profesional.findByUsuarioIdUsuario", query = "SELECT p FROM Profesional p WHERE p.usuarioIdUsuario = :usuarioIdUsuario")})
+    , @NamedQuery(name = "Profesional.findByEstado", query = "SELECT p FROM Profesional p WHERE p.estado = :estado")})
 public class Profesional implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -63,10 +63,14 @@ public class Profesional implements Serializable {
     private String amaterno;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "USUARIO_ID_USUARIO")
-    private int usuarioIdUsuario;
+    @Size(min = 1, max = 15)
+    @Column(name = "ESTADO")
+    private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
     private Collection<Capacitacion> capacitacionCollection;
+    @JoinColumn(name = "USUARIO_ID_USUARIO", referencedColumnName = "ID_USUARIO")
+    @OneToOne(optional = false)
+    private Usuario usuarioIdUsuario;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesionalIdProfesional")
     private Collection<Contrato> contratoCollection;
     @OneToMany(mappedBy = "profesionalIdProfesional")
@@ -83,12 +87,12 @@ public class Profesional implements Serializable {
         this.idProfesional = idProfesional;
     }
 
-    public Profesional(String nombreprofesional, String apaterno, String amaterno, int usuarioIdUsuario) {
-        
+    public Profesional( String nombreprofesional, String apaterno, String amaterno, String estado) {
+        this.idProfesional = idProfesional;
         this.nombreprofesional = nombreprofesional;
         this.apaterno = apaterno;
         this.amaterno = amaterno;
-        this.usuarioIdUsuario = usuarioIdUsuario;
+        this.estado = estado;
     }
 
     public int getIdProfesional() {
@@ -123,12 +127,12 @@ public class Profesional implements Serializable {
         this.amaterno = amaterno;
     }
 
-    public int getUsuarioIdUsuario() {
-        return usuarioIdUsuario;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setUsuarioIdUsuario(int usuarioIdUsuario) {
-        this.usuarioIdUsuario = usuarioIdUsuario;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     @XmlTransient
@@ -138,6 +142,14 @@ public class Profesional implements Serializable {
 
     public void setCapacitacionCollection(Collection<Capacitacion> capacitacionCollection) {
         this.capacitacionCollection = capacitacionCollection;
+    }
+
+    public Usuario getUsuarioIdUsuario() {
+        return usuarioIdUsuario;
+    }
+
+    public void setUsuarioIdUsuario(Usuario usuarioIdUsuario) {
+        this.usuarioIdUsuario = usuarioIdUsuario;
     }
 
     @XmlTransient
@@ -176,7 +188,6 @@ public class Profesional implements Serializable {
         this.asesoriaCollection = asesoriaCollection;
     }
 
-    
 
     @Override
     public String toString() {

@@ -17,7 +17,6 @@ public class User {
     private ArrayList<Usuario> usrs;
     private ArrayList<Profesional> prfs;
     private Usuario activo;
-    private int idUsuario = 1;
     
     public User(){
         activo = null;
@@ -35,9 +34,7 @@ public class User {
         return false;
     }
     public void agregarUsuario(Usuario us){
-        us.setIdUsuario(idUsuario);
-        idUsuario++;
-        //return this.usrs.add(us);
+        this.usrs.add(us);
     }
     
     public ArrayList<Usuario> getAll(){

@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -22,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -37,7 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Contrato.findByIdContrato", query = "SELECT c FROM Contrato c WHERE c.contratoPK.idContrato = :idContrato")
     , @NamedQuery(name = "Contrato.findByFechainicio", query = "SELECT c FROM Contrato c WHERE c.fechainicio = :fechainicio")
     , @NamedQuery(name = "Contrato.findByFechatermino", query = "SELECT c FROM Contrato c WHERE c.fechatermino = :fechatermino")
-    , @NamedQuery(name = "Contrato.findByClienteIdCliente", query = "SELECT c FROM Contrato c WHERE c.contratoPK.clienteIdCliente = :clienteIdCliente")})
+    , @NamedQuery(name = "Contrato.findByClienteIdCliente", query = "SELECT c FROM Contrato c WHERE c.contratoPK.clienteIdCliente = :clienteIdCliente")
+    , @NamedQuery(name = "Contrato.findByEstado", query = "SELECT c FROM Contrato c WHERE c.estado = :estado")})
 public class Contrato implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,6 +54,11 @@ public class Contrato implements Serializable {
     @Column(name = "FECHATERMINO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechatermino;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "ESTADO")
+    private String estado;
     @JoinColumn(name = "CLIENTE_ID_CLIENTE", referencedColumnName = "ID_CLIENTE", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Cliente cliente;
@@ -74,13 +80,14 @@ public class Contrato implements Serializable {
         this.contratoPK = contratoPK;
     }
 
-    public Contrato(ContratoPK contratoPK, Date fechainicio, Date fechatermino) {
-        this.contratoPK = contratoPK;
+    public Contrato( Date fechainicio, Date fechatermino, String estado) {
+        //this.contratoPK = contratoPK;
         this.fechainicio = fechainicio;
         this.fechatermino = fechatermino;
+        this.estado = estado;
     }
 
-    public Contrato(BigInteger idContrato, BigInteger clienteIdCliente) {
+    public Contrato(int idContrato, int clienteIdCliente) {
         this.contratoPK = new ContratoPK(idContrato, clienteIdCliente);
     }
 
@@ -106,6 +113,14 @@ public class Contrato implements Serializable {
 
     public void setFechatermino(Date fechatermino) {
         this.fechatermino = fechatermino;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Cliente getCliente() {

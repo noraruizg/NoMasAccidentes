@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -38,8 +36,23 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "PlanServicio.findByNombreplan", query = "SELECT p FROM PlanServicio p WHERE p.nombreplan = :nombreplan")
     , @NamedQuery(name = "PlanServicio.findByDescripcionplan", query = "SELECT p FROM PlanServicio p WHERE p.descripcionplan = :descripcionplan")
     , @NamedQuery(name = "PlanServicio.findByCostoplan", query = "SELECT p FROM PlanServicio p WHERE p.costoplan = :costoplan")
-    , @NamedQuery(name = "PlanServicio.findByVisitaIdVisita", query = "SELECT p FROM PlanServicio p WHERE p.visitaIdVisita = :visitaIdVisita")})
+    , @NamedQuery(name = "PlanServicio.findByEstado", query = "SELECT p FROM PlanServicio p WHERE p.estado = :estado")})
 public class PlanServicio implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planServicioIdPlanServicio")
+    private Collection<Contrato> contratoCollection;
+    @JoinColumn(name = "ASESORIA_ID_ASESORIA", referencedColumnName = "ID_ASESORIA")
+    @ManyToOne
+    private Asesoria asesoriaIdAsesoria;
+    @JoinColumn(name = "CAPACITACION_ID_CAPACITACION", referencedColumnName = "ID_CAPACITACION")
+    @ManyToOne
+    private Capacitacion capacitacionIdCapacitacion;
+    @JoinColumn(name = "LLAMADA_ID_LLAMADA", referencedColumnName = "ID_LLAMADA")
+    @ManyToOne
+    private Llamada llamadaIdLlamada;
+    @JoinColumn(name = "VISITA_ID_VISITA", referencedColumnName = "ID_VISITA")
+    @ManyToOne
+    private Visita visitaIdVisita;
 
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -47,7 +60,7 @@ public class PlanServicio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_PLAN_SERVICIO")
-    private BigDecimal idPlanServicio;
+    private int idPlanServicio;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -61,40 +74,33 @@ public class PlanServicio implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "COSTOPLAN")
-    private BigInteger costoplan;
-    @Column(name = "VISITA_ID_VISITA")
-    private BigInteger visitaIdVisita;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "planServicioIdPlanServicio")
-    private Collection<Contrato> contratoCollection;
-    @JoinColumn(name = "ASESORIA_ID_ASESORIA", referencedColumnName = "ID_ASESORIA")
-    @ManyToOne
-    private Asesoria asesoriaIdAsesoria;
-    @JoinColumn(name = "CAPACITACION_ID_CAPACITACION", referencedColumnName = "ID_CAPACITACION")
-    @ManyToOne
-    private Capacitacion capacitacionIdCapacitacion;
-    @JoinColumn(name = "LLAMADA_ID_LLAMADA", referencedColumnName = "ID_LLAMADA")
-    @ManyToOne
-    private Llamada llamadaIdLlamada;
+    private int costoplan;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
+    @Column(name = "ESTADO")
+    private String estado;
 
     public PlanServicio() {
     }
 
-    public PlanServicio(BigDecimal idPlanServicio) {
+    public PlanServicio(int idPlanServicio) {
         this.idPlanServicio = idPlanServicio;
     }
 
-    public PlanServicio(BigDecimal idPlanServicio, String nombreplan, String descripcionplan, BigInteger costoplan) {
-        this.idPlanServicio = idPlanServicio;
+    public PlanServicio( String nombreplan, String descripcionplan, int costoplan, String estado) {
+       // this.idPlanServicio = idPlanServicio;
         this.nombreplan = nombreplan;
         this.descripcionplan = descripcionplan;
         this.costoplan = costoplan;
+        this.estado = estado;
     }
 
-    public BigDecimal getIdPlanServicio() {
+    public int getIdPlanServicio() {
         return idPlanServicio;
     }
 
-    public void setIdPlanServicio(BigDecimal idPlanServicio) {
+    public void setIdPlanServicio(int idPlanServicio) {
         this.idPlanServicio = idPlanServicio;
     }
 
@@ -114,20 +120,25 @@ public class PlanServicio implements Serializable {
         this.descripcionplan = descripcionplan;
     }
 
-    public BigInteger getCostoplan() {
+    public int getCostoplan() {
         return costoplan;
     }
 
-    public void setCostoplan(BigInteger costoplan) {
+    public void setCostoplan(int costoplan) {
         this.costoplan = costoplan;
     }
 
-    public BigInteger getVisitaIdVisita() {
-        return visitaIdVisita;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setVisitaIdVisita(BigInteger visitaIdVisita) {
-        this.visitaIdVisita = visitaIdVisita;
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    @Override
+    public String toString() {
+        return "modelo.PlanServicio[ idPlanServicio=" + idPlanServicio + " ]";
     }
 
     @XmlTransient
@@ -163,29 +174,12 @@ public class PlanServicio implements Serializable {
         this.llamadaIdLlamada = llamadaIdLlamada;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idPlanServicio != null ? idPlanServicio.hashCode() : 0);
-        return hash;
+    public Visita getVisitaIdVisita() {
+        return visitaIdVisita;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PlanServicio)) {
-            return false;
-        }
-        PlanServicio other = (PlanServicio) object;
-        if ((this.idPlanServicio == null && other.idPlanServicio != null) || (this.idPlanServicio != null && !this.idPlanServicio.equals(other.idPlanServicio))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.PlanServicio[ idPlanServicio=" + idPlanServicio + " ]";
+    public void setVisitaIdVisita(Visita visitaIdVisita) {
+        this.visitaIdVisita = visitaIdVisita;
     }
     
 }

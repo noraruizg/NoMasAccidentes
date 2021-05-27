@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -22,59 +21,37 @@ public class ContratoPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CONTRATO")
-    private BigInteger idContrato;
+    private int idContrato;
     @Basic(optional = false)
     @NotNull
     @Column(name = "CLIENTE_ID_CLIENTE")
-    private BigInteger clienteIdCliente;
+    private int clienteIdCliente;
 
     public ContratoPK() {
     }
 
-    public ContratoPK(BigInteger idContrato, BigInteger clienteIdCliente) {
+    public ContratoPK(int idContrato, int clienteIdCliente) {
         this.idContrato = idContrato;
         this.clienteIdCliente = clienteIdCliente;
     }
 
-    public BigInteger getIdContrato() {
+    public int getIdContrato() {
         return idContrato;
     }
 
-    public void setIdContrato(BigInteger idContrato) {
+    public void setIdContrato(int idContrato) {
         this.idContrato = idContrato;
     }
 
-    public BigInteger getClienteIdCliente() {
+    public int getClienteIdCliente() {
         return clienteIdCliente;
     }
 
-    public void setClienteIdCliente(BigInteger clienteIdCliente) {
+    public void setClienteIdCliente(int clienteIdCliente) {
         this.clienteIdCliente = clienteIdCliente;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idContrato != null ? idContrato.hashCode() : 0);
-        hash += (clienteIdCliente != null ? clienteIdCliente.hashCode() : 0);
-        return hash;
-    }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ContratoPK)) {
-            return false;
-        }
-        ContratoPK other = (ContratoPK) object;
-        if ((this.idContrato == null && other.idContrato != null) || (this.idContrato != null && !this.idContrato.equals(other.idContrato))) {
-            return false;
-        }
-        if ((this.clienteIdCliente == null && other.clienteIdCliente != null) || (this.clienteIdCliente != null && !this.clienteIdCliente.equals(other.clienteIdCliente))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

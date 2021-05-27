@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package servlet;
 
 import ConexionconBD.ConexionBD;
@@ -20,7 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import modelo.Usuario;
 
 @WebServlet(name = "agregarContrato", urlPatterns = {"/agregarContrato"})
 public class agregarContrato extends HttpServlet {
@@ -40,7 +34,7 @@ public class agregarContrato extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession s = request.getSession();
+        HttpSession sesion = request.getSession();
         
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
         
@@ -54,8 +48,7 @@ public class agregarContrato extends HttpServlet {
             Logger.getLogger(agregarContrato.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        java.sql.Date fechaInicio = new java.sql.Date(fechaIni.getTime());
-        
+        java.sql.Date fechaInicio = new java.sql.Date(fechaIni.getTime());       
         
         java.util.Date fechaTer = null;
         try {
@@ -66,26 +59,26 @@ public class agregarContrato extends HttpServlet {
         
         java.sql.Date fechaTermino = new java.sql.Date(fechaTer.getTime());
         
-        int idProfesional = Integer.parseInt(request.getParameter("id_Profesional"));
+        String idCliente = request.getParameter("id_cliente");
         int planServicio = Integer.parseInt(request.getParameter("id_PlanServicio"));
+        String IdProf = sesion.getAttribute("idProfesional").toString();
         
         ConexionBD conec = new ConexionBD();
         Connection conn = conec.conectar(); 
         
         try{  
-            CallableStatement  cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?)}");
+            CallableStatement cst = conn.prepareCall("{call RegistrarContrato(?,?,?,?,?,?)}");
             cst.setDate(1, fechaInicio);
             cst.setDate(2, fechaTermino);
-            cst.setInt(3, 2); 
-            cst.setInt(4, idProfesional);
-            cst.setInt(5, planServicio); 
+            cst.setString(3, "T");
+            cst.setString(4, idCliente); 
+            cst.setString(5, IdProf);
+            cst.setInt(6, planServicio); 
             cst.executeUpdate(); 
         }catch(SQLException ex){
             System.out.println("Error de SQL" + ex);
         }
-        request.getRequestDispatcher("listarContrato").forward(request, response);
-
-
+        response.sendRedirect("listarContrato");
     }
 
     @Override

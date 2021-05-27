@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -46,7 +45,7 @@ public class Asesoria implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_ASESORIA")
-    private BigDecimal idAsesoria;
+    private int idAsesoria;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHAASESORIA")
@@ -68,21 +67,21 @@ public class Asesoria implements Serializable {
     public Asesoria() {
     }
 
-    public Asesoria(BigDecimal idAsesoria) {
+    public Asesoria(int idAsesoria) {
         this.idAsesoria = idAsesoria;
     }
 
-    public Asesoria(BigDecimal idAsesoria, Date fechaasesoria, String tipoasesoria) {
-        this.idAsesoria = idAsesoria;
+    public Asesoria( Date fechaasesoria, String tipoasesoria) {
+        //this.idAsesoria = idAsesoria;
         this.fechaasesoria = fechaasesoria;
         this.tipoasesoria = tipoasesoria;
     }
 
-    public BigDecimal getIdAsesoria() {
+    public int getIdAsesoria() {
         return idAsesoria;
     }
 
-    public void setIdAsesoria(BigDecimal idAsesoria) {
+    public void setIdAsesoria(int idAsesoria) {
         this.idAsesoria = idAsesoria;
     }
 
@@ -128,25 +127,6 @@ public class Asesoria implements Serializable {
         this.profesionalIdProfesional = profesionalIdProfesional;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAsesoria != null ? idAsesoria.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Asesoria)) {
-            return false;
-        }
-        Asesoria other = (Asesoria) object;
-        if ((this.idAsesoria == null && other.idAsesoria != null) || (this.idAsesoria != null && !this.idAsesoria.equals(other.idAsesoria))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

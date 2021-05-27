@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Asistente.findByApmaternoasistente", query = "SELECT a FROM Asistente a WHERE a.apmaternoasistente = :apmaternoasistente")})
 public class Asistente implements Serializable {
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asistenteRutAsistente")
+    private Collection<Capacitacion> capacitacionCollection;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -58,8 +61,6 @@ public class Asistente implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "APMATERNOASISTENTE")
     private String apmaternoasistente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asistenteRutAsistente")
-    private Collection<Capacitacion> capacitacionCollection;
 
     public Asistente() {
     }
@@ -107,15 +108,6 @@ public class Asistente implements Serializable {
         this.apmaternoasistente = apmaternoasistente;
     }
 
-    @XmlTransient
-    public Collection<Capacitacion> getCapacitacionCollection() {
-        return capacitacionCollection;
-    }
-
-    public void setCapacitacionCollection(Collection<Capacitacion> capacitacionCollection) {
-        this.capacitacionCollection = capacitacionCollection;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -139,6 +131,15 @@ public class Asistente implements Serializable {
     @Override
     public String toString() {
         return "modelo.Asistente[ rutAsistente=" + rutAsistente + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Capacitacion> getCapacitacionCollection() {
+        return capacitacionCollection;
+    }
+
+    public void setCapacitacionCollection(Collection<Capacitacion> capacitacionCollection) {
+        this.capacitacionCollection = capacitacionCollection;
     }
     
 }

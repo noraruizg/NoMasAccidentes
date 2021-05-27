@@ -6,8 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -48,7 +46,7 @@ public class Capacitacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CAPACITACION")
-    private BigDecimal idCapacitacion;
+    private int idCapacitacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHACAPACITACION")
@@ -62,7 +60,7 @@ public class Capacitacion implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANTCAPACITACION")
-    private BigInteger cantcapacitacion;
+    private int cantcapacitacion;
     @JoinColumn(name = "ASISTENTE_RUT_ASISTENTE", referencedColumnName = "RUT_ASISTENTE")
     @ManyToOne(optional = false)
     private Asistente asistenteRutAsistente;
@@ -78,22 +76,22 @@ public class Capacitacion implements Serializable {
     public Capacitacion() {
     }
 
-    public Capacitacion(BigDecimal idCapacitacion) {
+    public Capacitacion(int idCapacitacion) {
         this.idCapacitacion = idCapacitacion;
     }
 
-    public Capacitacion(BigDecimal idCapacitacion, Date fechacapacitacion, String descripcioncapacitacion, BigInteger cantcapacitacion) {
-        this.idCapacitacion = idCapacitacion;
+    public Capacitacion( Date fechacapacitacion, String descripcioncapacitacion,int cantcapacitacion) {
+        //this.idCapacitacion = idCapacitacion;
         this.fechacapacitacion = fechacapacitacion;
         this.descripcioncapacitacion = descripcioncapacitacion;
         this.cantcapacitacion = cantcapacitacion;
     }
 
-    public BigDecimal getIdCapacitacion() {
+    public int getIdCapacitacion() {
         return idCapacitacion;
     }
 
-    public void setIdCapacitacion(BigDecimal idCapacitacion) {
+    public void setIdCapacitacion(int idCapacitacion) {
         this.idCapacitacion = idCapacitacion;
     }
 
@@ -113,11 +111,11 @@ public class Capacitacion implements Serializable {
         this.descripcioncapacitacion = descripcioncapacitacion;
     }
 
-    public BigInteger getCantcapacitacion() {
+    public int getCantcapacitacion() {
         return cantcapacitacion;
     }
 
-    public void setCantcapacitacion(BigInteger cantcapacitacion) {
+    public void setCantcapacitacion(int cantcapacitacion) {
         this.cantcapacitacion = cantcapacitacion;
     }
 
@@ -152,26 +150,6 @@ public class Capacitacion implements Serializable {
 
     public void setPlanServicioCollection(Collection<PlanServicio> planServicioCollection) {
         this.planServicioCollection = planServicioCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idCapacitacion != null ? idCapacitacion.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Capacitacion)) {
-            return false;
-        }
-        Capacitacion other = (Capacitacion) object;
-        if ((this.idCapacitacion == null && other.idCapacitacion != null) || (this.idCapacitacion != null && !this.idCapacitacion.equals(other.idCapacitacion))) {
-            return false;
-        }
-        return true;
     }
 
     @Override

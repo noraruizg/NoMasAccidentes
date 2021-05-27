@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -47,7 +46,7 @@ public class Alerta implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_ALERTA")
-    private BigDecimal idAlerta;
+    private int idAlerta;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHA")
@@ -71,22 +70,22 @@ public class Alerta implements Serializable {
     public Alerta() {
     }
 
-    public Alerta(BigDecimal idAlerta) {
+    public Alerta(int idAlerta) {
         this.idAlerta = idAlerta;
     }
 
-    public Alerta(BigDecimal idAlerta, Date fecha, String descripcionalerta, Character estadoalerta) {
+    public Alerta(int idAlerta, Date fecha, String descripcionalerta, Character estadoalerta) {
         this.idAlerta = idAlerta;
         this.fecha = fecha;
         this.descripcionalerta = descripcionalerta;
         this.estadoalerta = estadoalerta;
     }
 
-    public BigDecimal getIdAlerta() {
+    public int getIdAlerta() {
         return idAlerta;
     }
 
-    public void setIdAlerta(BigDecimal idAlerta) {
+    public void setIdAlerta(int idAlerta) {
         this.idAlerta = idAlerta;
     }
 
@@ -131,25 +130,6 @@ public class Alerta implements Serializable {
         this.accidenteIdAccidente = accidenteIdAccidente;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAlerta != null ? idAlerta.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Alerta)) {
-            return false;
-        }
-        Alerta other = (Alerta) object;
-        if ((this.idAlerta == null && other.idAlerta != null) || (this.idAlerta != null && !this.idAlerta.equals(other.idAlerta))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

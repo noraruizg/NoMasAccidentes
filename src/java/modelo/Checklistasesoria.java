@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -40,13 +39,17 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Checklistasesoria.findByFechamodificacion", query = "SELECT c FROM Checklistasesoria c WHERE c.fechamodificacion = :fechamodificacion")})
 public class Checklistasesoria implements Serializable {
 
+    @JoinColumn(name = "ASESORIA_ID_ASESORIA", referencedColumnName = "ID_ASESORIA")
+    @ManyToOne
+    private Asesoria asesoriaIdAsesoria;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_CHECKLISTASESORIA")
-    private BigDecimal idChecklistasesoria;
+    private int idChecklistasesoria;
     @Basic(optional = false)
     @NotNull
     @Column(name = "FECHACHECKLISTASESORIA")
@@ -69,30 +72,27 @@ public class Checklistasesoria implements Serializable {
     @Column(name = "FECHAMODIFICACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechamodificacion;
-    @JoinColumn(name = "ASESORIA_ID_ASESORIA", referencedColumnName = "ID_ASESORIA")
-    @ManyToOne
-    private Asesoria asesoriaIdAsesoria;
 
     public Checklistasesoria() {
     }
 
-    public Checklistasesoria(BigDecimal idChecklistasesoria) {
+    public Checklistasesoria(int idChecklistasesoria) {
         this.idChecklistasesoria = idChecklistasesoria;
     }
 
-    public Checklistasesoria(BigDecimal idChecklistasesoria, Date fechachecklistasesoria, String causanteasesoria, String mejora, Character estadochecklist) {
-        this.idChecklistasesoria = idChecklistasesoria;
+    public Checklistasesoria( Date fechachecklistasesoria, String causanteasesoria, String mejora, Character estadochecklist) {
+       // this.idChecklistasesoria = idChecklistasesoria;
         this.fechachecklistasesoria = fechachecklistasesoria;
         this.causanteasesoria = causanteasesoria;
         this.mejora = mejora;
         this.estadochecklist = estadochecklist;
     }
 
-    public BigDecimal getIdChecklistasesoria() {
+    public int getIdChecklistasesoria() {
         return idChecklistasesoria;
     }
 
-    public void setIdChecklistasesoria(BigDecimal idChecklistasesoria) {
+    public void setIdChecklistasesoria(int idChecklistasesoria) {
         this.idChecklistasesoria = idChecklistasesoria;
     }
 
@@ -136,37 +136,18 @@ public class Checklistasesoria implements Serializable {
         this.fechamodificacion = fechamodificacion;
     }
 
+
+    @Override
+    public String toString() {
+        return "modelo.Checklistasesoria[ idChecklistasesoria=" + idChecklistasesoria + " ]";
+    }
+
     public Asesoria getAsesoriaIdAsesoria() {
         return asesoriaIdAsesoria;
     }
 
     public void setAsesoriaIdAsesoria(Asesoria asesoriaIdAsesoria) {
         this.asesoriaIdAsesoria = asesoriaIdAsesoria;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idChecklistasesoria != null ? idChecklistasesoria.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Checklistasesoria)) {
-            return false;
-        }
-        Checklistasesoria other = (Checklistasesoria) object;
-        if ((this.idChecklistasesoria == null && other.idChecklistasesoria != null) || (this.idChecklistasesoria != null && !this.idChecklistasesoria.equals(other.idChecklistasesoria))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Checklistasesoria[ idChecklistasesoria=" + idChecklistasesoria + " ]";
     }
     
 }

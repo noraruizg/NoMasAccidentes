@@ -6,7 +6,6 @@
 package modelo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -41,13 +40,19 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Accidente.findByFechaaccidente", query = "SELECT a FROM Accidente a WHERE a.fechaaccidente = :fechaaccidente")})
 public class Accidente implements Serializable {
 
+    @JoinColumn(name = "CLIENTE_ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
+    @ManyToOne(optional = false)
+    private Cliente clienteIdCliente;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accidenteIdAccidente")
+    private Collection<Alerta> alertaCollection;
+
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID_ACCIDENTE")
-    private BigDecimal idAccidente;
+    private int idAccidente;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 500)
@@ -58,30 +63,25 @@ public class Accidente implements Serializable {
     @Column(name = "FECHAACCIDENTE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaaccidente;
-    @JoinColumn(name = "CLIENTE_ID_CLIENTE", referencedColumnName = "ID_CLIENTE")
-    @ManyToOne(optional = false)
-    private Cliente clienteIdCliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accidenteIdAccidente")
-    private Collection<Alerta> alertaCollection;
 
     public Accidente() {
     }
 
-    public Accidente(BigDecimal idAccidente) {
+    public Accidente(int idAccidente) {
         this.idAccidente = idAccidente;
     }
 
-    public Accidente(BigDecimal idAccidente, String descripcionaccidente, Date fechaaccidente) {
-        this.idAccidente = idAccidente;
+    public Accidente(String descripcionaccidente, Date fechaaccidente) {
+        //this.idAccidente = idAccidente;
         this.descripcionaccidente = descripcionaccidente;
         this.fechaaccidente = fechaaccidente;
     }
 
-    public BigDecimal getIdAccidente() {
+    public int getIdAccidente() {
         return idAccidente;
     }
 
-    public void setIdAccidente(BigDecimal idAccidente) {
+    public void setIdAccidente(int idAccidente) {
         this.idAccidente = idAccidente;
     }
 
@@ -101,6 +101,12 @@ public class Accidente implements Serializable {
         this.fechaaccidente = fechaaccidente;
     }
 
+
+    @Override
+    public String toString() {
+        return "modelo.Accidente[ idAccidente=" + idAccidente + " ]";
+    }
+
     public Cliente getClienteIdCliente() {
         return clienteIdCliente;
     }
@@ -116,31 +122,6 @@ public class Accidente implements Serializable {
 
     public void setAlertaCollection(Collection<Alerta> alertaCollection) {
         this.alertaCollection = alertaCollection;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idAccidente != null ? idAccidente.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Accidente)) {
-            return false;
-        }
-        Accidente other = (Accidente) object;
-        if ((this.idAccidente == null && other.idAccidente != null) || (this.idAccidente != null && !this.idAccidente.equals(other.idAccidente))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "modelo.Accidente[ idAccidente=" + idAccidente + " ]";
     }
     
 }
