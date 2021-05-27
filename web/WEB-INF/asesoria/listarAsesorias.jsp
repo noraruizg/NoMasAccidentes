@@ -1,13 +1,22 @@
-<%-- 
-    Document   : listarAsesorias
-    Created on : 13-05-2021, 11:44:12
-    Author     : norar
---%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        
+        <%
+            Class.forName("oracle.jdbc.OracleDriver").newInstance();
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
+            Statement st = con.createStatement();
+            HttpSession sesion = request.getSession();
+        %>
+        
         <style>
             body{
                 background-color: #EBFBE8;
@@ -80,50 +89,50 @@
     </head>
     <body>
         <ul>
-            
+            <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
-            <li><a href="listarAsesoria"class="active">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            
 
             <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
         <h2>Listado de Asesorias</h2>
         <div class="input-group mb-3">
-					
-		<input type="text" value="" name="buscar" placeholder="Ingrese nombre para buscar" aria-describedby="basic-addon1">
-                    
-			<button class="btn btn-buscar" type="submit">Buscar Asesoria</button>
-			<a href="listarAsesoria" class="btn btn-todos" >Ver todos</a>
-			<a href="asesoriaEspecial" class="btn btn-crear ">Agregar Asesoria</a>
+            <a href="asesoriaEspecial" class="btn btn-crear ">Agregar Asesoria</a>
         </div>
 	<table class="table table-sm table-striped">
             <thead>
             <tr>
-                <th>#</th>
                 <th>Fecha</th>
                 <th>Tipo</th>
                 <th>Opciones</th>
-
-
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${asesorias}" var="asesoria">
+                <%  
+                    String idProfes = sesion.getAttribute("idProfesional").toString();
+                    String queryContratos = "SELECT ase.FECHAASESORIA, ase.TIPOASESORIA FROM ASESORIA ase INNER JOIN CLIENTE cli ON ase.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON ase.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
+                    ResultSet rsContrato = st.executeQuery(queryContratos);                
+                    while(rsContrato.next()){
+                    java.sql.Date fechaAse = rsContrato.getDate("FECHAASESORIA");
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    String fechaAs = dateFormat.format(fechaAse);
+                %>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td><%= fechaAs%></td>
+                    <td><%= rsContrato.getString("TIPOASESORIA")%></td>
                     <td></td>
                 </tr>
-            </c:forEach>
+                <%
+                    } 
+                %>
             </tbody>
         </table>
         <div class="clearfix"></div>
 	<hr>
 	<div class="text-right">
 	<a href="?page=1" class="btn btn-sgant" rel="next">Siguiente →</a>
-
 	</div>
     </body>
 </html>

@@ -3,7 +3,7 @@
     Created on : 08-05-2021, 19:20:50
     Author     : norar
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -70,9 +70,10 @@
     </style>
     <body>
         <ul>
-            <li><a href="generarPago"class="active">Pagos</a></li>
+            <li><a href="pago"class="active">Pagos</a></li>
             <li><a href="crearAccidente">Accidentes</a></li>
             <li><a href="asesoriaExtra" >Asesorias</a></li>
+            
 
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>

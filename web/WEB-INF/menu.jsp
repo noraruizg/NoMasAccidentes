@@ -72,7 +72,8 @@
         <ul><li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li></ul>
         <h3>Menu Usuarios</h3>
         
-        <a href="listarCapacitacion">Profesional</a><br>
-        <a href="generarPago">Cliente</a>
+
+        <a href="profesional">Profesional</a><br>
+        <a href="cliente">Cliente</a>
     </body>
 </html>

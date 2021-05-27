@@ -1,13 +1,24 @@
 <%-- 
-    Document   : visita
-    Created on : 08-05-2021, 20:16:54
+    Document   : agregarMateriales
+    Created on : 24-05-2021, 22:55:43
     Author     : norar
 --%>
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page session="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-    <style>
+    <%
+        Class.forName("oracle.jdbc.OracleDriver").newInstance();
+        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
+        Statement st = con.createStatement();
+    %>
+        <style>
         body{
                 background-color: #EBFBE8;
             }
@@ -69,33 +80,46 @@
         }
     </style>
     <body>
+        <%
+            HttpSession sesion = request.getSession();
+            String email;
+            String pass;
+                
+            if(sesion.getAttribute("email") != null && sesion.getAttribute("pass") != null){
+                email = sesion.getAttribute("email").toString();
+                pass = sesion.getAttribute("pass").toString();
+            }
+        %>
+        
         <ul>
             <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
             <li><a href="listarVisitas">Visitas</a></li>
             
-            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Planificar Visita</h3>
+        
+        <h3>Agregar Materiales</h3>
+        
         <div>
-            <form action="visita" method="POST">
+            <form action="agregarMateriales" method="POST">
+                <label>Nombre de Materiales</label>
+                <input type="text" name="nombreMateriles" required>
+                <br><br>
                 
-                <label>Fecha Visita</label>
-                <input type="date" name="fechaVisita" required>
+                <label>Costo Materiales</label>
+                <input type="text" name="costoMateriales" required>
+                <br><br>
                 
-                <label>Profesional</label>
-                <select name="id_Profesional">
-                    <option value="0">Sin Asignar</option>
-                </select>
-                <br><br>   
-
-                <input type="submit" value="Planificar Visita">
+               <input type="hidden" name="idCapacitacion" value="<%=request.getParameter("idCapacitacionSeleccionada")%>">
+                
+                <input type="submit" value="Crear Materiales">
             </form>
-            <h3>${mensaje}</h3>
-            <c:forEach items="${mensajes}" var="mensaje">
                 <h3>${mensaje}</h3>
-            </c:forEach>
+                    <c:forEach items="${mensajes}" var="mensaje">
+                <h3>${mensaje}</h3>
+                    </c:forEach>
         </div>
     </body>
 </html>

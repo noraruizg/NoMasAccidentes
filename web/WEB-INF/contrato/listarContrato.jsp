@@ -1,13 +1,24 @@
-<%-- 
-    Document   : listarUsuario
-    Created on : 13-04-2021, 0:30:52
-    Author     : norar
---%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="ConexionconBD.ConexionBD"%>
+<%@page import="java.sql.Connection"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        
+        <%
+            Class.forName("oracle.jdbc.OracleDriver").newInstance();
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
+            Statement st = con.createStatement();
+            HttpSession sesion = request.getSession();
+        %>
+        
         <style>
             body{
                 background-color: #EBFBE8;
@@ -80,54 +91,51 @@
     </head>
     <body>
         <ul>
+            <li><a href="listarContrato">Contratos</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
             
-            <li><a href="listarUsuario">Usuarios</a></li>
-            <li><a href="listarProfesional">Profesional</a></li>
-            <li><a href="listarCliente">Clientes</a></li>
-            <li><a href="listarContrato"class="active">Contratos</a></li>
-            <li><a href="listarReportes">Reportes</a></li>
-
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         <h2>Listado de Contratos</h2>
-        <div class="input-group mb-3">
-					
-		<input type="text" value="" name="buscar" placeholder="Ingrese nombre para buscar" aria-describedby="basic-addon1">
-                    
-			<button class="btn btn-buscar" type="submit">Buscar Contrato</button>
-			<a href="listarContrato" class="btn btn-todos" >Ver todos</a>
-			<a href="agregarContrato" class="btn btn-crear ">Crear Contrato</a>
-            </div>
-	</div>
+        <div class="input-group mb-3">				
+            <a href="agregarContrato" class="btn btn-crear ">Crear Contrato</a>
+        </div>
         <table class="table table-sm table-striped">
             <thead>
             <tr>
-                <th>#</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Vencimiento</th>
                 <th>Cliente</th>
                 <th>Opciones</th>
-
-
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${contratos}" var="contrato">
+                <%  
+                    String idProfes = sesion.getAttribute("idProfesional").toString();
+                    String queryContratos = "SELECT co.ID_CONTRATO,co.FECHAINICIO, co.FECHATERMINO, NOMBRE FROM CONTRATO co INNER JOIN CLIENTE cli ON co.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON co.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
+                    ResultSet rsContrato = st.executeQuery(queryContratos);                
+                    while(rsContrato.next()){
+                    java.sql.Date fechaIni = rsContrato.getDate("FECHAINICIO");
+                    java.sql.Date fechaTer = rsContrato.getDate("FECHATERMINO");
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    String fechaIn = dateFormat.format(fechaIni);
+                    String fechaTe = dateFormat.format(fechaTer);
+                %>
                 <tr>
-                    <td>${contrato.idContrato}</td>
-                    <td>${contrato.fInicio}</td>
-                    <td>${contrato.fVencimiento}</td>
-                    <td>${contrato.idCliente}</td>
+                    <td><%= fechaIn%></td>
+                    <td><%= fechaTe%></td>
+                    <td><%= rsContrato.getString("NOMBRE")%></td>
+                    <th>
+                        <a href="servicioExtra?idContratoSeleccionado=<%=rsContrato.getInt("ID_CONTRATO")%>">Agregar Servicio Extra</a>
+                    </th>
                     <td></td>
                 </tr>
-            </c:forEach>
+                <%
+                    } 
+                %>
             </tbody>
         </table>
-        <div class="clearfix"></div>
-	<hr>
-	<div class="text-right">
-	<a href="?page=1" class="btn btn-sgant" rel="next">Siguiente →</a>
-
-	</div>
     </body>
 </html>

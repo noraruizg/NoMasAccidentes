@@ -1,27 +1,13 @@
 <%-- 
-    Document   : listarVisitas
-    Created on : 08-05-2021, 20:46:54
+    Document   : homeProfesional
+    Created on : 19-05-2021, 19:46:30
     Author     : norar
 --%>
-<%@page import="java.text.SimpleDateFormat"%>
-<%@page import="java.text.DateFormat"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="ConexionconBD.ConexionBD"%>
-<%@page import="java.sql.Connection"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <%
-            Class.forName("oracle.jdbc.OracleDriver").newInstance();
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
-            Statement st = con.createStatement();
-            HttpSession sesion = request.getSession();
-        %>
         <style>
             body{
                 background-color: #EBFBE8;
@@ -98,10 +84,12 @@
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
             <li><a href="listarVisitas">Visitas</a></li>
-            
+
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         
-        
+        <div class="input-group mb-3">
+            <h1>Bienvenido Profesional</h1>
+        </div>
     </body>
 </html>

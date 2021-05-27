@@ -1,9 +1,12 @@
-<%-- 
-    Document   : asistentes
-    Created on : 08-05-2021, 20:07:18
-    Author     : norar
---%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="ConexionconBD.ConexionBD"%>
+<%@page import="java.sql.Connection"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -70,11 +73,13 @@
     </style>
     <body>
         <ul>
+            <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
-            <li><a href="listarAsesoria"class="active">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            
 
-            <li style="float:right"><a href="logout">Cerrar Sesion </a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         <h3>Crear Asistente</h3>
         <div>
@@ -91,7 +96,9 @@
                 <label>Apellido Materno</label>
                 <input type="text" name="apMaternoAsistente" required>
                 <br><br>   
-
+                
+                <input type="hidden" name="idCapacitacion" value="<%=request.getParameter("idCapacitacionSeleccionada")%>">
+                
                 <input type="submit" value="Generar Asistente">
             </form>
             <h3>${mensaje}</h3>
@@ -100,5 +107,4 @@
             </c:forEach>
         </div>
     </body>
-    
 </html>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarVisitas
-    Created on : 08-05-2021, 20:46:54
+    Document   : checklistAsesoria
+    Created on : 25-05-2021, 14:03:47
     Author     : norar
 --%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -16,12 +16,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <%
             Class.forName("oracle.jdbc.OracleDriver").newInstance();
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
             Statement st = con.createStatement();
             HttpSession sesion = request.getSession();
         %>
+        
         <style>
             body{
                 background-color: #EBFBE8;
@@ -102,6 +104,51 @@
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         
-        
+        <h3>Checklist Asesoria</h3>
+        <div>
+            <form action="checklistAsesoria" method="POST">
+                <label>Fecha Checlist Asesoria</label>
+                <input type="date" name="fechaChecklistAsesoria" required>
+                <br><br>
+                
+                <label>Causante Asesoria</label>
+                <input type="text" name="causanteAsesoria" required>
+                <br><br>
+                
+                <label>Mejoras</label>
+                <input type="text" name="mejora" required>
+                <br><br>
+                
+                <label>Estado Checklist</label>
+                <input type="text" name="estadoChecklist" required>
+                <br><br>
+                
+                <label>Fecha Modificacion</label>
+                <input type="date" name="fechaModificacion" required>
+                <br><br>
+                
+                <label>Asesoria</label>
+                <select name="id_asesoria">
+                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
+                    <%    
+                      //Mostrar Asesorias en ComboBox  
+                      String queryAsesoria = "SELECT id_asesoria, tipoAsesoria, Cliente_rut_cliente FROM asesoria ORDER BY tipoAsesoria";
+                      ResultSet rsAsesoria = st.executeQuery(queryAsesoria);
+                      
+                      while(rsAsesoria.next()){
+                    %>
+                        <option value="<%=rsAsesoria.getString("id_asesoria")%>"><%=rsAsesoria.getString("tipoAsesoria")%></option>
+                    <%
+                      } 
+                    %>
+                </select>
+                
+              <input type="submit" value="Crear Checklist Asesoria">
+            </form>
+            <h3>${mensaje}</h3>
+            <c:forEach items="${mensajes}" var="mensaje">
+                <h3>${mensaje}</h3>
+            </c:forEach>
+        </div>
     </body>
 </html>

@@ -1,17 +1,23 @@
-<%-- 
-    Document   : asesoriaEspecial
-    Created on : 08-05-2021, 20:51:00
-    Author     : norar
---%>
-
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+    
+    <%
+        Class.forName("oracle.jdbc.OracleDriver").newInstance();
+        Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
+        Statement st = con.createStatement();
+    %>
+    
     <style>
         body{
                 background-color: #EBFBE8;
             }
-         input[type=text],input[type=password],input[type=number],input[type=email], select {
+         input[type=text],input[type=password],input[type=number],input[type=date], select {
             width: 100%;
             padding: 12px 20px;
             margin: 8px 0;
@@ -70,28 +76,42 @@
     </style>
     <body>
         <ul>
+            <li><a href="listarContrato">Contratos</a></li>
             <li><a href="listarCapacitacion">Capacitaciones</a></li>
-            <li><a href="listarAsesoria"class="active">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarAsesoria">Asesorias</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
+            
 
-            <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
+            <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
-        <h3>Agregar Asesoria</h3>
+        <h3>Ingresar Asesoria</h3>
         <div>
             <form action="asesoriaEspecial" method="POST">
-                <label>Fecha Asesoria</label>
-                <input type="date" name="fechaAsesoria" required>
-                <br><br>
+                <label>Fecha de Asesoria</label>
+                <input type="date" name="fAsesoria" required>
+                
                 <label>Tipo de Asesoria</label>
-                <input type="text" name="tipoAsesoria" required>
+                <input type="text" name="tAsesoria" placeholder="Ingrese el Tipo de Asesoria" required>
+                
+                <label>Cliente</label>
+                <select name="idCliente">
+                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
+                    <%    
+                      //Mostrar Profesionales en ComboBox  
+                      String queryCliente = "SELECT RUT_CLIENTE, NOMBRE FROM CLIENTE ORDER BY NOMBRE";
+                      ResultSet rsCliente = st.executeQuery(queryCliente);
+                      
+                      while(rsCliente.next()){
+                    %>
+                        <option value="<%=rsCliente.getString("RUT_CLIENTE")%>"><%=rsCliente.getString("NOMBRE")%></option>
+                    <%
+                      } 
+                    %>
+                </select>
                 <br><br>   
 
-                <input type="submit" value="Solicitar Asesoria Extra">
+                <input type="submit" value="Ingresar Asesoria">
             </form>
-            <h3>${mensaje}</h3>
-            <c:forEach items="${mensajes}" var="mensaje">
-                <h3>${mensaje}</h3>
-            </c:forEach>
         </div>
     </body>
 </html>

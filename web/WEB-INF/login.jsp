@@ -4,7 +4,10 @@
     Author     : norar
 --%>
 
+<%@page import="java.sql.Connection"%>
+<%@page import="ConexionconBD.ConexionBD"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,7 +25,7 @@
                 box-sizing: border-box;
             }
 
-            button {
+            input[type=submit] {
                 background-color: #4CAF50;
                 color: white;
                 padding: 14px 20px;
@@ -32,7 +35,7 @@
                 width: 100%;
             }
 
-            button:hover {
+            buttoninput[type=submit]:hover {
                 opacity: 0.8;
             }
 
@@ -77,20 +80,17 @@
         </style>
     </head>
     <body>
-        <h2>Inicio de Sesión</h2>
-            <form action="." method="POST">
+        <form action="login" method="POST">
             <div class="container">
-                <label for="uname"><b>Correo</b></label>
-                <input type="email" placeholder="Ingresa correo" name="uname" required>
+                <h2>Inicio de Sesión</h2>
+                <label for=""><b>Correo</b></label>
+                <input type="email" placeholder="Ingresa correo" name="txtEmail">
 
-                <label for="psw"><b>Contraseña</b></label>
-                <input type="password" placeholder="Ingresa contraseña" name="psw" required>
+                <label for=""><b>Contraseña</b></label>
+                <input type="password" placeholder="Ingresa contraseña" name="txtPass">
 
-                <button type="submit">Login</button>
-                
-                <p>${mensaje}</p>
+                <input type="submit" name="btnIngresar" value="Ingresar">
             </div>
         </form>
-
     </body>
 </html>

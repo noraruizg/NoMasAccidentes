@@ -1,6 +1,6 @@
 <%-- 
-    Document   : listarVisitas
-    Created on : 08-05-2021, 20:46:54
+    Document   : checklistVisita
+    Created on : 25-05-2021, 14:04:10
     Author     : norar
 --%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -16,12 +16,14 @@
 <!DOCTYPE html>
 <html>
     <head>
+        
         <%
             Class.forName("oracle.jdbc.OracleDriver").newInstance();
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
             Statement st = con.createStatement();
             HttpSession sesion = request.getSession();
         %>
+        
         <style>
             body{
                 background-color: #EBFBE8;
@@ -102,6 +104,47 @@
             <li style="float:right"><a href="logout">Cerrar Sesion ${nombre}</a></li>
         </ul>
         
-        
+        <h3>Checklist Visita</h3>
+        <div>
+            <form action="checklistVisita" method="POST">
+                <label>Fecha Checklist Visita</label>
+                <input type="date" name="fechaChecklistVisita" required>
+                <br><br>
+                
+                <label>Mejoras</label>
+                <input type="text" name="mejora" required>
+                <br><br>
+                
+                <label>Estado Checklist</label>
+                <input type="text" name="estadoChecklist" required>
+                <br><br>
+                
+                <label>Fecha Modificacion</label>
+                <input type="date" name="fechaModificacion" required>
+                <br><br>
+                
+                <label>Visita</label>
+                <select name="id_visita">
+                    <option value="sinAsignar" disabled selected hidden>Sin Asignar</option>
+                    <%    
+                      //Mostrar Visityas en ComboBox  
+                      String queryVisita = "SELECT id_visita, tipoVisita, Cliente_rut_cliente FROM visita ORDER BY cliente_rut_cliente";
+                      ResultSet rsVisita = st.executeQuery(queryVisita);
+                      
+                      while(rsVisita.next()){
+                    %>
+                        <option value="<%=rsVisita.getString("id_visita")%>"><%=rsVisita.getString("cliente_rut_cliente")%></option>
+                    <%
+                      } 
+                    %>
+                </select>
+                
+                <input type="submit" value="Crear Checklist Visita">
+            </form>
+            <h3>${mensaje}</h3>
+            <c:forEach items="${mensajes}" var="mensaje">
+            <h3>${mensaje}</h3>
+            </c:forEach>
+        </div>
     </body>
 </html>

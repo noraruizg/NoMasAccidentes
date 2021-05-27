@@ -1,13 +1,23 @@
-<%-- 
-    Document   : listarCapacitaciones
-    Created on : 08-05-2021, 20:46:37
-    Author     : norar
---%>
-
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="ConexionconBD.ConexionBD"%>
+<%@page import="java.sql.Connection"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
+        <%
+            Class.forName("oracle.jdbc.OracleDriver").newInstance();
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "c##BDv1", "duoc");
+            Statement st = con.createStatement();
+            HttpSession sesion = request.getSession();
+        %>
+        
         <style>
             body{
                 background-color: #EBFBE8;
@@ -80,10 +90,10 @@
     </head>
     <body>
         <ul>
-            
-            <li><a href="listarCapacitacion"class="active">Capacitaciones</a></li>
+            <li><a href="listarContrato">Contratos</a></li>
+            <li><a href="listarCapacitacion">Capacitaciones</a></li>
             <li><a href="listarAsesoria">Asesorias</a></li>
-            <li><a href="">Checklist</a></li>
+            <li><a href="listarVisitas">Visitas</a></li>
 
             <li style="float:right"><a href="logout">Cerrar Sesion</a></li>
         </ul>
@@ -99,25 +109,37 @@
 	<table class="table table-sm table-striped">
             <thead>
             <tr>
-                <th>#</th>
                 <th>Fecha</th>
-                <th>Descripcion</th>
-                <th>Cant.Asistentes</th>
+                <th>Descripcion Capacitacion</th>
+                <th>Cliente</th>
                 <th>Opciones</th>
-
+                
 
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${capacitaciones}" var="capacitacion">
+            <%  
+                    String idProfes = sesion.getAttribute("idProfesional").toString();
+                    String queryCapacitaciones = "SELECT c.id_capacitacion,c.fechacapacitacion,c.descripcioncapacitacion,cli.nombre,pro.nombreprofesional FROM CAPACITACION c INNER JOIN CLIENTE cli ON c.cliente_rut_cliente = cli.rut_cliente INNER JOIN PROFESIONAL pro ON c.profesional_rut_profesional = pro.rut_profesional WHERE pro.rut_profesional = '"+idProfes+"'";
+                    ResultSet rsCpacitacion = st.executeQuery(queryCapacitaciones);                
+                    while(rsCpacitacion.next()){
+                    java.sql.Date fechaCap = rsCpacitacion.getDate("fechacapacitacion");
+                    DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                    String fechaCapa = dateFormat.format(fechaCap);
+                %>
                 <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <th><%= fechaCapa%></th>
+                    <th><%= rsCpacitacion.getString("descripcioncapacitacion")%></th>
+                    <th><%= rsCpacitacion.getString("nombre")%></th>
+                    <th>
+                        <a href="asistentes?idCapacitacionSeleccionada=<%=rsCpacitacion.getInt("id_capacitacion")%>">Agregar Asistentes</a>
+                        <a href="agregarMateriales?idCapacitacionSeleccionada=<%=rsCpacitacion.getInt("id_capacitacion")%>">Agregar Materiales</a>
+                    </th>
+
                 </tr>
-            </c:forEach>
+                <%
+                    } 
+                %>
             </tbody>
         </table>
         <div class="clearfix"></div>
