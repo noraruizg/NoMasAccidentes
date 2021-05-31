@@ -28,7 +28,23 @@ public class agregarContrato extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("WEB-INF/contrato/agregarContrato.jsp").forward(request, response);
+        HttpSession sesion = request.getSession();
+        
+        ConexionBD conec = new ConexionBD();
+        String email = request.getParameter("txtEmail");
+        String pass = request.getParameter("txtPass");
+        int tipoUser = conec.loguear(email, pass);
+        
+        if(tipoUser == 1)
+                request.getRequestDispatcher("WEB-INF/error.jsp").forward(request, response);        
+        else{
+            if(tipoUser == 2)
+                request.getRequestDispatcher("WEB-INF/contrato/agregarContrato.jsp").forward(request, response);
+            if(tipoUser == 3)
+                request.getRequestDispatcher("WEB-INF/cliente/homeCliente.jsp").forward(request, response);
+             
+                }
+        
     }
 
     @Override
